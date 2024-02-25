@@ -1,22 +1,22 @@
 #include<iostream>
 using namespace std;
 
-#define MAX 101
+#define MAX 100
 
 int main(){
 
-  int i, n=0, m;
+  int i, n=0;
   cin >> n;
   
-  int vet[MAX];
+  int vet[MAX], copy[MAX];
 
   for(i=1; i<=n; i++){
-    cin>>m;
-    vet[m] = i;
+    cin>>vet[i];
+    copy[vet[i]]=i;
   }
 
   for(i =1; i<=n; i++){
-    cout << vet[i] << " ";
+    cout << copy[i] << " ";
   }  
 
   return 0;
