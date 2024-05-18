@@ -1,0 +1,35 @@
+Comandos com vim:
+
+Ativa sintaxe colorida
+
+  :syntax on 
+
+Adiciona a numeração
+
+  :set number
+
+Copiar
+
+  yy
+
+Recortar
+
+  dd
+
+Colar
+
+  p
+
+Selecionar
+
+  Esc -> V
+
+Primeira Linha (fora do visual)
+  
+  gg  
+
+Última Linha 
+
+  G
+
+  
