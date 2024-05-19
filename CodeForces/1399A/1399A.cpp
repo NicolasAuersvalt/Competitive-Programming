@@ -15,7 +15,7 @@ int main(){
 	    cin >> vector[j];
 	  }
 		
-	  // ordena
+	  // Ordena
 		sort(vector, vector + n);
 
 	  int flag=0;
