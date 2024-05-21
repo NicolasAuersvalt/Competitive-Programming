@@ -1,39 +1,58 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+
 
 using namespace std;
 
 int main(){
 
-  // Input
+  //  Input
 
-  int qtd=0, i, j;
-  cin >> qtd;
-  for(i=0; i<qtd; i++){
-    int sum=0;
+  int n=0, i;
+  cin >> n;
+  cin.ignore();
+
+  for(i=0;i<n;i++){
+
+    int j, len=0;
     string str;
-    cin >> str;
-    for(j=0; j<str.length();j++){
+    getline(cin, str);
 
-      if(str[j]=='1'){
-        sum+=2;
+    //cout << str << endl;
+    len = str.size();
+    //cout << len << endl<< endl;
+
+
+    // Mudança de 3 posições para a direita (+3) para cada letra
+
+    for(j=0; j<len; j++){ // Percorre o vetor
+             // Letras (65-90) e (97-122)
+
+      int asc = static_cast<int>(str[j]);
+      //cout << "asc: " << asc << " para str " << str[j] << endl;
+      if((asc>64 && asc<91) || (asc > 96 && asc < 123)){
+        str[j]+=3;
       }
-      else if(str[j]=='7') // 3 leds
-        sum+=3;
-      else if(str[j]=='4') // 4 leds
-        sum+=4;
-      else if(str[j]=='2' || str[j]=='3' || str[j]=='5') //5 leds
-        sum+=5;
-      else if(str[j]=='9' || str[j] == '0' ||str[j]=='6')
-        sum+=6;
-      else if(str[j]=='8')
-        sum+=7;
 
     }
-    cout << sum << " leds" << endl;
+    //cout << "Etapa 1: "<< str << endl;
+
+
+    // Inverter o vetor
+    for(j=0; j<(len/2); j++){
+      swap(str[j], str[len-j-1]);
+    }
+
+    //cout << "Etapa 2: "<< str << endl;
+
+    // Da metade para direita deve andar uma posição para a esquerda (-1)
+
+    for(j=((len/2)); j<len; j++){
+      str[j]-=1;
+    }
+    cout << str << endl;
+    //cout << str << endl;
   }
-
-  //Armazena cada valor em  uma posição de um vetor.
-
-
-  return 0;
 }
