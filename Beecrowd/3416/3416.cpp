@@ -1,24 +1,20 @@
-// If there is more coffee available than necessary, there is no problem
+#include<bits/stdc++.h>
 
-// If there is less coffee than necessary for all the students, they will be angry
-
-// the minimum amount of litres of coffee
-
-
-#include<stdio.h>
+using namespace std;
 
 int main() {
-    int n = 0, l = 0, d = 0;
-    scanf("%d %d %d", &n, &l, &d);
+    int n = 0, l = 0, d = 0; // n = qtd alunos; l = qtd café; d = qtd militros que cada aluno bebe
+    double qtd=0;
+    cin >> n >> l >> d;
 
-    // qtd min = n * d
-    if (n * d > l) {
-        int result = ((n * d + l - 1) / l);
-        printf("%d", result * l);
+    qtd = (n * d) / 1000; // qtd, em litros, do total de café necessário
+    // qtd min = n * d/1000
+    if(qtd>(double)l){ // mais do que pode produzir
+        cout<< (qtd / l)+1 << endl;
+    }
+    else{ // tem café suficiente
 
-    } else {
-
-        printf("%d\n", l);
+        cout << l <<  endl;
     }
 
     return 0;
