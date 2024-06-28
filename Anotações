@@ -1,0 +1,22 @@
+# Leitura de valores em uma linha separada por espaços
+
+valores = input("Digite três valores separados por espaço: ")
+a, b, c = map(int, valores.split())
+
+
+# Parar de executar o código após atingir algo
+
+  1° import sys
+
+  # ao chegar no local
+
+  2° sys.exit(0)  #Encerra o programa com status de sucesso (0)
+
+
+# Exibir quantidade de linhas limitadas para float
+
+  print({:.5}) # Limita a 5
+
+
+#
+  
