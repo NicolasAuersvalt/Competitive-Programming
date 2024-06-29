@@ -1,3 +1,16 @@
+'''
+len(): Retorna o comprimento da string.
+
+lower() e upper(): Converte a string para minúsculas ou maiúsculas, respectivamente.
+
+strip(): Remove espaços em branco do início e do final da string.
+
+split(): Divide a string em uma lista de substrings usando um separador especificado.
+
+'''
+
+
+
 # Leitura de valores em uma linha separada por espaços
 
 valores = input("Digite três valores separados por espaço: ")
@@ -18,5 +31,5 @@ a, b, c = map(int, valores.split())
   print({:.5}) # Limita a 5
 
 
-#
+# 
   
