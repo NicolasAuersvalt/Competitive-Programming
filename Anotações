@@ -17,6 +17,7 @@ valores = input("Digite três valores separados por espaço: ")
 a, b, c = map(int, valores.split())
 
 
+
 # Parar de executar o código após atingir algo
 
   1° import sys
@@ -31,5 +32,15 @@ a, b, c = map(int, valores.split())
   print({:.5}) # Limita a 5
 
 
-# 
+
+# Strings
+
+# Para definir o começo de uma string
+
+string[1:] # começa em 1
+
+Hello
+ ello # com [1:]
+
+
   
