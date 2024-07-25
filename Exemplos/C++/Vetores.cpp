@@ -12,9 +12,13 @@
 
 vector<int> vector;
 
+vector<bool> fita(tam, false);
+
 // Declaração com elementos pré-definidos
 
 vector<int> vector(5,2); // 5 casas com o valor 2 em cada uma
+
+vector<int> vector(5,0); // 5 casas zerando elas
 
 // ====/====/====/====/====/====/====/====/====/====/====/
 
@@ -61,3 +65,10 @@ auto i; // Ponteiro para o início do vetor
 for(i = vetor.begin(); i!=vetor.end(); i++){
   cout << *i << " ";
 })
+
+
+// ====/====/====/====/====/====/====/====/====/====/====/
+// # Inverter vetor dado um outro
+// ====/====/====/====/====/====/====/====/====/====/====/
+
+vector<int> vet3(vet.rbegin(), vet.rend());
