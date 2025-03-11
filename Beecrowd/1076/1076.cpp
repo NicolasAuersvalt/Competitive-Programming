@@ -2,36 +2,105 @@
 
 using namespace std;
 
-int dfs(vector<vector<int>>&adj, int val){
-	
-	return val;
-}
 
 int main(){
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
 
-	int n;
-	cin >> n;
-	while(n--){
-		int part;
-		cin >> part;
+	int t;
+	cin >> t;
+
+	while (t--){
+
+		int p; // partida
+		cin >> p;
 
 		int v, a;
-		cin >> v >> a;
+		int soma=0;
 
-		vector<vector<int>> adj (v);
+
+		
+		cin >> v >> a;		
+		vector<vector<int>> adj(49);
 
 		for(int i=0; i<a; i++){
+			int c, d;
+			cin >> c >> d;
 
-			int j, k;
-			cin >> j >> k;
+			// bidirecional
+			adj[c].push_back(d);
+			adj[d].push_back(c);
 
-			adj[j].push_back(k);
+
 		}
 
-		cout << dfs(adj, part) << endl;
+		vector<bool> visitado(49,false);
+
+		queue<int> fila;
+
+		fila.push(p); // Partida
+		int ultimo;
+
+		while(!fila.empty()){
+
+			int k = fila.front();
+			fila.pop();
+			if(!visitado[k]){
+					
+				soma++;
+
+				visitado[k] = true;
+
+				for(auto it : adj[k]){
+
+					if(!visitado[it]){
+						//cout << "Visitando " << k << " - " << it << endl;
+						fila.push(it);
+						ultimo = it;
+					}
+
+			}
+
+		}
+		}
+		/*
+		// Fazendo o inverso, ate a partida
+		
+		fila.push(ultimo);
+
+		bool achou = false;
+
+		while(fila.front()!=p && !achou){
+
+			int k = fila.front();
+			fila.pop();
+
+			if(visitado[k]){
+					
+				soma++;
+
+				visitado[k] = false;
+
+				for(auto it : adj[k]){
+
+					//cout << "Voltando " << k << " - " << it << endl;
+
+					if(it == p){
+						//cout << "Achou" << endl;
+						achou = true;
+						break;
+					}
+					if(visitado[it]){
+						fila.push(it);
+					}
+
+			}
+
+			}
+		}
+		*/
+
+		cout << 2*(soma-1) << endl;
 
 	}
+
 
 }
