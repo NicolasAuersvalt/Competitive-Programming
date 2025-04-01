@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-typedef long long ll;
+
 typedef vector<int> vi;
 typedef pair<int, int> ii; 
-
 
 class UnionFind { // OOP style
 
@@ -20,7 +19,7 @@ class UnionFind { // OOP style
             p.assign(N, 0); 
 
             // Inicializa o vetor com valores ordenados
-            for (int i = 0; /i < N; i++)
+            for (int i = 0; i < N; i++)
                 p[i] = i; 
         }
 
@@ -57,3 +56,49 @@ class UnionFind { // OOP style
            }   
         } 
     };
+
+int main(){
+
+    while(true){ 
+
+        vector< pair<int, ii> > EdgeList; // (weight, two vertices) of the edge
+
+        int E, J; // E - Numero de Cidades e J - Numero de Ligações
+
+        cin >> E >> J;
+        
+        if(E==0 && J==0){return 0;}
+
+        for (int i = 0; i < J; i++) {
+            int u, v, w;
+            cin >> u >> v >> w;
+            EdgeList.push_back(make_pair(w, ii(u, v)));   // (w, u, v)
+
+        }
+
+        // Ordena pelos menores pesos em O(E log E)
+        sort(EdgeList.begin(), EdgeList.end());
+
+        int mst_cost = 0; // Variável do custo total
+
+        UnionFind UF(E); // Cria o conjunto completamente disjunto inicialmente
+
+        for (int i = 0; i < J; i++) { // Para cada aresta em EdgeList
+
+            pair<int, ii> front = EdgeList[i]; // Pega a aresta
+
+            // Verifica se o a partida está no mesmo conjunto que a chegada
+            if (!UF.isSameSet(front.second.first, front.second.second)) {
+
+                // Se não tiver, soma o custo total
+                mst_cost += front.first; 
+
+                // Une os dois conjuntos
+                UF.unionSet(front.second.first, front.second.second); 
+
+            } 
+        }
+
+        cout << mst_cost << endl;
+        }
+    }
