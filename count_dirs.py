@@ -10,6 +10,7 @@ def contar_arquivos_validos(diretorio='.'):
                 contador += 1
     return contador
 
+
 if __name__ == "__main__":
     total = contar_arquivos_validos()
     print(f"Total de arquivos .cpp, .c, .java e .py: {total}")
