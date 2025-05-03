@@ -102,4 +102,3 @@ int main(){
         cout << mst_cost << endl;
         }
     }
-
