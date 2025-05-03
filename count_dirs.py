@@ -1,14 +1,16 @@
 import os
 
-def count_subdirs(path='.'):
-    return sum(os.path.isdir(os.path.join(path, d)) for d in os.listdir(path))
+EXTENSOES = {'.cpp', '.c', '.java', '.py'}
 
-with open("README.md", "r", encoding="utf-8") as file:
-    content = file.read()
+def contar_arquivos_validos(diretorio='.'):
+    contador = 0
+    for root, _, files in os.walk(diretorio):
+        for file in files:
+            if os.path.splitext(file)[1] in EXTENSOES:
+                contador += 1
+    return contador
 
-new_content = re.sub(r"(?<=<!--dir_count_start-->).*?(?=<!--dir_count_end-->)",
-                     f"{count_subdirs()}", content, flags=re.DOTALL)
-
-with open("README.md", "w", encoding="utf-8") as file:
-    file.write(new_content)
+if __name__ == "__main__":
+    total = contar_arquivos_validos()
+    print(f"Total de arquivos .cpp, .c, .java e .py: {total}")
 
