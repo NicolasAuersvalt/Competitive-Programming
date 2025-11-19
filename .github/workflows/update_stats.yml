@@ -1,13 +1,13 @@
-name: Atualizar Contador Total
+name: Gerar JSON de Estatísticas
 
 on:
   push:
     branches:
-      - main       # <--- VERIFIQUE ISSO (leia abaixo)
+      - main       # ou master
   workflow_dispatch:
 
 jobs:
-  update-readme:
+  update-json:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,13 +18,14 @@ jobs:
         with:
           python-version: '3.x'
       
-      - name: Rodar contador
-        run: python count_total.py  # O nome do arquivo do passo 1
+      - name: Gerar JSON
+        run: python generate_stats_json.py
 
-      - name: Salvar mudanças
+      - name: Commit e Push do JSON
         run: |
-          git config --global user.name "bot-contador"
+          git config --global user.name "bot-stats"
           git config --global user.email "bot@noreply.github.com"
-          git add README.md
-          git commit -m "docs: atualiza contagem total" || exit 0
+          git add stats.json
+          # Só faz commit se o número mudou
+          git commit -m "stats: atualiza contagem" || exit 0
           git push
