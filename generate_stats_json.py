@@ -2,7 +2,7 @@ import os
 import json
 
 # Configurações
-target_extensions = ('.cpp', '.java', '.py', '.c')
+target_extensions = ('.cpp', '.java', '.py', '.c', '.sql')
 json_filename = 'stats.json'
 
 total_count = 0
