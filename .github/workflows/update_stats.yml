@@ -1,0 +1,30 @@
+name: Atualizar Contador Total
+
+on:
+  push:
+    branches:
+      - main       # <--- VERIFIQUE ISSO (leia abaixo)
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Rodar contador
+        run: python count_total.py  # O nome do arquivo do passo 1
+
+      - name: Salvar mudanças
+        run: |
+          git config --global user.name "bot-contador"
+          git config --global user.email "bot@noreply.github.com"
+          git add README.md
+          git commit -m "docs: atualiza contagem total" || exit 0
+          git push
