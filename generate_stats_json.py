@@ -19,7 +19,7 @@ for root, dirs, files in os.walk('.'):
 # 2. Criar estrutura para o Shields.io Endpoint
 data = {
     "schemaVersion": 1,
-    "label": "Meus Códigos",
+    "label": "Quantidade de Problemas Competitivos Resolvidos",
     "message": str(total_count),
     "color": "blue",
     "style": "for-the-badge"  # Estilo visual (opcional)
