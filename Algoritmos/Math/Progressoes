@@ -1,0 +1,24 @@
+long long termoPG(long long a1, long long r, long long n) {
+    long long p = 1;
+    for (long long i = 0; i < n - 1; i++) p *= r;
+    return a1 * p;
+}
+
+long long termoPA(long long a1, long long r, long long n) {
+    return a1 + (n - 1) * r;
+}
+
+
+long long somaPA(long long a1, long long r, long long n) {
+    return n * (2 * a1 + (n - 1) * r) / 2;
+}
+
+long long somaPG(long long a1, long long r, long long n) {
+    long long p = 1;
+    for (long long i = 0; i < n; i++) p *= r;
+    return a1 * (p - 1) / (r - 1);
+}
+
+long long somaQuadrados(long long n) {
+    return n * (n + 1) * (2 * n + 1) / 6;
+}

@@ -1,0 +1,34 @@
+// DECLARAÇÃO
+vector<int> v = {1, 2, 3};
+
+// OPERAÇÕES BÁSICAS
+v.push_back(4);    // Insere no final
+v.pop_back();      // Remove o último
+
+int n = v.size();  // Tamanho
+int x = v.back();  // Último elemento
+
+v.clear();         // Remove tudo
+v.resize(10, -1);  // Redimensiona e preenche com -1
+
+// ITERAÇÃO
+
+// 1. Índice (acesso direto)
+for (int i = 0; i < (int)v.size(); i++)
+    cout << v[i] << " ";
+
+// 2. Range-based
+for (int x : v) cout << x << " ";   // Cópia
+for (int &x : v) x++;               // Referência (modifica)
+
+// 3. Iteradores (equivalente a ponteiros)
+// begin() -> primeiro elemento
+// end()   -> posição após o último
+for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+    cout << *it << " ";
+}
+
+// 4. Ponteiro para dados internos
+int *p = v.data();        // Ponteiro para o primeiro elemento
+cout << p[0] << " ";      // Acesso como array
+cout << *(p + 1) << " ";  // Aritmética de ponteiros

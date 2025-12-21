@@ -1,0 +1,45 @@
+#include <vector>
+#include <queue>
+using namespace std;
+
+// 4 direções: cima, baixo, esquerda, direita
+int dx[4] = {0, 0, 1, -1};
+int dy[4] = {1, -1, 0, 0};
+
+void floodFillBFS(vector<vector<int>>& grid, int x, int y, int target, int color) {
+    int n = grid.size();
+    int m = grid[0].size();
+    if (grid[x][y] != target) return;
+
+    queue<pair<int,int>> q;
+    q.push({x, y});
+    grid[x][y] = color;
+
+    while (!q.empty()) {
+        auto [cx, cy] = q.front(); q.pop();
+
+        for (int dir = 0; dir < 4; dir++) {
+            int nx = cx + dx[dir];
+            int ny = cy + dy[dir];
+
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] == target) {
+                grid[nx][ny] = color;
+                q.push({nx, ny});
+            }
+        }
+    }
+}
+
+
+vector<vector<int>> grid = {
+    {1,1,0,0},
+    {1,0,0,1},
+    {0,0,1,1},
+    {0,1,1,0}
+};
+
+int x = 0, y = 0;      // ponto inicial
+int target = grid[x][y]; 
+int color = 2;          // nova cor
+
+floodFillBFS(grid, x, y, target, color);

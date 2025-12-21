@@ -1,0 +1,23 @@
+ll prim(const vector<vector<int>>& mat) {
+    int n = mat.size();
+    vector<int> dist(n, INF);
+    vector<bool> used(n, false);
+    dist[0] = 0;
+    ll mst = 0;
+
+    for (int i = 0; i < n; i++) {
+        int u = -1;
+        for (int j = 0; j < n; j++)
+            if (!used[j] && (u == -1 || dist[j] < dist[u]))
+                u = j;
+
+        used[u] = true;
+        mst += dist[u];
+
+        for (int v = 0; v < n; v++) {
+            if (mat[u][v] && !used[v])
+                dist[v] = min(dist[v], mat[u][v]);
+        }
+    }
+    return mst;
+}

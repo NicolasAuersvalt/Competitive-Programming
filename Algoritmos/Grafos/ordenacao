@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void topoDFS(int u, const vector<vector<int>>& adj, vector<bool>& visited, stack<int>& st) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) topoDFS(v, adj, visited, st);
+    }
+    st.push(u); // coloca após visitar todos os vizinhos
+}
+
+vector<int> topologicalSort(const vector<vector<int>>& adj) {
+    int n = adj.size();
+    vector<bool> visited(n, false);
+    stack<int> st;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) topoDFS(i, adj, visited, st);
+    }
+
+    vector<int> order;
+    while (!st.empty()) {
+        order.push_back(st.top());
+        st.pop();
+    }
+    return order;
+}
+
+
+int n = 6;
+vector<vector<int>> adj(n);
+adj[5].push_back(2);
+adj[5].push_back(0);
+adj[4].push_back(0);
+adj[4].push_back(1);
+adj[2].push_back(3);
+adj[3].push_back(1);
+
+vector<int> order = topologicalSort(adj);
+
+// order contém uma sequência topológica válida
+for (int u : order) cout << u << " ";

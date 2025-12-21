@@ -1,0 +1,30 @@
+// Preprocessamento: O(N)
+// Fatoracao: O(log N)
+
+const int MAXN = 1e7 + 5;
+int spf[MAXN];
+vector<int> primes;
+
+void linear_sieve() {
+    for (int i = 2; i < MAXN; ++i) {
+        if (spf[i] == 0) {
+            spf[i] = i;
+            primes.push_back(i);
+        }
+        for (int p : primes) {
+            if (p > spf[i] || (long long)i * p >= MAXN) break;
+            spf[i * p] = p;
+        }
+    }
+}
+
+int main() {
+    linear_sieve();
+
+    int x = 84;
+    while (x > 1) {
+        cout << spf[x] << " ";
+        x /= spf[x];
+    }
+    // Saida: 2 2 3 7
+}

@@ -1,0 +1,20 @@
+#include <vector>
+using namespace std;
+
+// 4 direcoes: cima, baixo, esquerda, direita
+int dx[4] = {0, 0, 1, -1};
+int dy[4] = {1, -1, 0, 0};
+
+void floodFillDFS(vector<vector<int>>& grid, int x, int y, int target, int color) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    if (x < 0 || x >= n || y < 0 || y >= m) return;
+    if (grid[x][y] != target) return;
+
+    grid[x][y] = color; // pinta
+
+    for (int dir = 0; dir < 4; dir++) {
+        floodFillDFS(grid, x + dx[dir], y + dy[dir], target, color);
+    }
+}

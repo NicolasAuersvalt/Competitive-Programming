@@ -1,0 +1,13 @@
+stack<int> s;
+
+s.push(10);
+s.push(20);
+
+int topo = s.top();   // Olha o topo (20)
+s.pop();              // Remove o topo
+
+// "ITERAÇÃO" (Destrutiva)
+while (!s.empty()) {
+    cout << s.top() << " ";
+    s.pop();
+}

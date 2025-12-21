@@ -1,0 +1,21 @@
+// 1. MAX-HEAP (padrao)
+priority_queue<int> pq;
+pq.push(10);
+pq.push(30);
+pq.push(20);
+
+cout << pq.top(); // 30
+pq.pop();         // remove 30
+
+// 2. MIN-HEAP
+priority_queue<int, vector<int>, greater<int>> min_pq;
+min_pq.push(10);
+min_pq.push(30);
+
+cout << min_pq.top(); // 10
+
+// "Iteracao" destrutiva
+while (!pq.empty()) {
+    cout << pq.top() << " ";
+    pq.pop();
+}

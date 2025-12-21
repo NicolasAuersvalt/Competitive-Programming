@@ -1,0 +1,2676 @@
+\documentclass[11pt]{article}
+
+\input{preamble} % NÃO usar .tex
+
+\begin{document}
+
+\title{Programação Competitiva}	% Title		
+\author{ Nícolas Auersvalt Marques}	
+\date{\today}		% Date
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+%\rhead{\theauthor}
+\lhead{\thetitle}\fancyfoot[R]{\thepage}   % direita embaixo
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\centering
+    \vspace*{0.5 cm}
+    \includegraphics[scale = 0.3]{logo/logo.png}\\[1cm]	% University Logo
+    \textsc{\LARGE Universidade Tecnológica Federal do Paraná - UTFPR}\\[1.5 cm]	% University Name
+\textsc{\large Engenharia de Computação}\\[0.5 cm]				% Course Name
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	{ \huge \bfseries \thetitle}\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	%
+		\begin{flushleft}
+		\large
+			\emph{\large Aluno:}\\
+			\theauthor{}
+		\end{flushleft}
+%
+			\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+		\end{flushright}
+	\end{minipage}\\[2 cm]
+	
+	\textsc{\large Programação Competitiva}\\
+	\textsc{\large Prof. Nico Auersvalt}\\
+	\vspace{2cm}
+	{\large \thedate}\\[2 cm]
+	\vfill
+	
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\begin{multicols}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Template}
+
+\subsection{Cabeçalho}
+
+\begin{lstlisting}
+    #include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using ld = long double;
+
+const int INF = 1e9; // Infinito para Inteiros
+const ll INFLL = 1e18; // Infinito para Long Long 
+const ld EPS = 1e-9; // Tolerância para números de ponto flutuante
+const ld PI = acos(-1.0L); // Valor de Pi com máxima precisão
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double ld;
+
+typedef pair<int, int> pii;
+
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+
+typedef vector<vector<int>> graph;
+typedef vector<vector<pair<int,int>>> wgraph; // (vizinho, peso)
+
+
+const int INF = 1e9; // Infinito para Inteiros
+const ll INFLL = 1e18; // Infinito para Long Long 
+const ld EPS = 1e-9; // Tolerância para números de ponto flutuante
+const ld PI = acos(-1.0L); // Valor de Pi com máxima precisão
+
+void solve() {
+    
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
+
+    return 0;
+}
+
+
+void solve() {
+    
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsection{Análise de Tempo}
+
+\begin{lstlisting}
+    clock_t start = clock();
+
+    // trecho a ser medido
+    solve();
+    
+    clock_t end = clock();
+    double elapsed = double(end - start) / CLOCKS_PER_SEC;
+    
+    cerr << "Tempo: " << elapsed << "s\n";
+
+\end{lstlisting}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Estruturas de Dados STL}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Vector (Array Dinâmico)}
+
+Array dinâmico com acesso direto. \\
+\textbf{Tempo:} acesso \(O(1)\), inserção no final \(O(1)\) amortizado.
+
+\begin{lstlisting}
+// DECLARAÇÃO
+vector<int> v = {1, 2, 3};
+
+// OPERAÇÕES BÁSICAS
+v.push_back(4);    // Insere no final
+v.pop_back();      // Remove o último
+
+int n = v.size();  // Tamanho
+int x = v.back();  // Último elemento
+
+v.clear();         // Remove tudo
+v.resize(10, -1);  // Redimensiona e preenche com -1
+
+// ITERAÇÃO
+
+// 1. Índice (acesso direto)
+for (int i = 0; i < (int)v.size(); i++)
+    cout << v[i] << " ";
+
+// 2. Range-based
+for (int x : v) cout << x << " ";   // Cópia
+for (int &x : v) x++;               // Referência (modifica)
+
+// 3. Iteradores (equivalente a ponteiros)
+// begin() -> primeiro elemento
+// end()   -> posição após o último
+for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+    cout << *it << " ";
+}
+
+// 4. Ponteiro para dados internos
+int *p = v.data();        // Ponteiro para o primeiro elemento
+cout << p[0] << " ";      // Acesso como array
+cout << *(p + 1) << " ";  // Aritmética de ponteiros
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Map (Árvore Rubro-Negra)}
+
+Mantém as chaves ordenadas.   \\
+\textbf{Tempo:} \(O(\log N)\) para inserir, buscar e deletar.  \\
+\textbf{Uso:} Quando a ordem importa ou as chaves são dispersas.
+
+\begin{lstlisting}
+map<string, int> mp;
+
+mp["nico"] = 10;   // Insere ou atualiza
+mp["las"]  = 20;
+
+// Verificar existencia
+if (mp.count("nico")) { ... }   // Retorna 1 se existe, 0 se nao
+
+// Busca com iterador (nao cria chave lixo)
+auto it = mp.find("chave_inexistente");
+if (it == mp.end()) cout << "Nao achou";
+
+// Lower/Upper Bound
+auto lb = mp.lower_bound("nico");   // primeira chave >= "nico"
+
+// ITERAÇÃO (ordem crescente das chaves)
+for (auto it = mp.begin(); it != mp.end(); it++) {
+    // it->first = Chave, it->second = Valor
+    cout << it->first << ": " << it->second << endl;
+}
+
+// Range-based (C++17 structured binding)
+for (auto [key, val] : mp) {
+    cout << key << ": " << val << endl;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Unordered Map (Hash Table)}
+
+Chaves não ordenadas.  \\
+\textbf{Tempo:} \(O(1)\) médio, mas \(O(N)\) no pior caso (colisões).  \\
+\textit{Obs.: Em competições, pode sofrer hack com anti-hash tests.} \\
+
+\begin{lstlisting}
+unordered_map<int, int> um;
+
+um[5] = 100;
+um[2] = 200;
+
+// Funcoes identicas ao map: insert, erase, find, count...
+
+// ITERAÇÃO (Ordem aleatoria/indefinida)
+for (auto it = um.begin(); it != um.end(); it++) {
+    cout << it->first << " -> " << it->second << endl;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Queue (Fila -- FIFO)}
+
+First In, First Out. Não possui iteradores.  \\
+\textbf{Tempo:} \(O(1)\) para todas as operações. \\
+
+\begin{lstlisting}
+queue<int> q;
+
+q.push(10);   // Insere no final
+q.push(20);
+
+int first = q.front();   // Primeiro (10)
+int last  = q.back();    // Ultimo (20)
+
+q.pop();     // Remove o primeiro (10)
+
+// "ITERAÇÃO" (Destrutiva)
+while (!q.empty()) {
+    cout << q.front() << " ";
+    q.pop();
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Stack (Pilha -- LIFO)}
+
+Last In, First Out. Não possui iteradores.  \\
+\textbf{Tempo:} \(O(1)\) para tudo.  \\
+\textbf{Uso:} DFS, checagem de parênteses, inversão. \\
+
+\begin{lstlisting}
+stack<int> s;
+
+s.push(10);
+s.push(20);
+
+int topo = s.top();   // Olha o topo (20)
+s.pop();              // Remove o topo
+
+// "ITERAÇÃO" (Destrutiva)
+while (!s.empty()) {
+    cout << s.top() << " ";
+    s.pop();
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Set \& Multiset (BST Balanceada)}
+
+Mantêm elementos sempre ordenados.
+
+\begin{itemize}
+    \item \textbf{set:} Armazena apenas elementos únicos.
+    \item \textbf{multiset:} Permite elementos repetidos.
+\end{itemize}
+
+\textbf{Complexidade:} Inserção, remoção e busca em $O(\log N)$.
+
+\textbf{Nota:} Elementos são \texttt{const}. Para alterar um valor, remova e reinsira.
+
+\begin{lstlisting}
+// SET
+set<int> s;
+s.insert(10);
+s.insert(5);
+s.insert(10); // Ignorado no set (aceito no multiset)
+
+// Verificar existencia
+if (s.count(5)) {
+    ...
+}
+
+// Remover elemento
+s.erase(5);
+
+// Lower Bound (primeiro elemento >= 7)
+auto it = s.lower_bound(7);
+if (it != s.end()) cout << *it;
+
+// Iteracao em ordem crescente
+for (auto it = s.begin(); it != s.end(); it++) {
+    cout << *it << " ";
+}
+
+// Range-based
+for (int x : s) cout << x << " ";
+
+// MULTISET
+multiset<int> ms;
+ms.insert(10);
+ms.insert(10);
+ms.insert(10);
+
+// ms.erase(10) remove TODAS as copias
+// Para remover apenas UMA:
+ms.erase(ms.find(10));
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Priority Queue (Binary Heap)}
+
+Mantém sempre o maior (ou menor) elemento acessível no topo.
+
+\textbf{Complexidade:} push/pop em $O(\log N)$; top em $O(1)$.
+
+\textbf{Usos:} Dijkstra, Prim, Huffman, problemas gulosos.
+
+\textbf{Nota:} Não possui iteradores.
+
+\begin{lstlisting}
+// 1. MAX-HEAP (padrao)
+priority_queue<int> pq;
+pq.push(10);
+pq.push(30);
+pq.push(20);
+
+cout << pq.top(); // 30
+pq.pop();         // remove 30
+
+// 2. MIN-HEAP
+priority_queue<int, vector<int>, greater<int>> min_pq;
+min_pq.push(10);
+min_pq.push(30);
+
+cout << min_pq.top(); // 10
+
+// "Iteracao" destrutiva
+while (!pq.empty()) {
+    cout << pq.top() << " ";
+    pq.pop();
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Heap Algorithms}
+
+Permitem trabalhar diretamente com \texttt{vector} como heap, sem \texttt{priority\_queue}.  
+Útil quando se deseja acesso aleatório aos elementos ou evitar cópias.
+
+\textbf{Complexidade:} \texttt{make\_heap} é $O(N)$ (mais rápido que inserir $N$ itens na PQ).
+
+\begin{lstlisting}
+vector<int> v = {3, 1, 4, 1, 5, 9};
+
+// Transformar em Max-Heap
+make_heap(v.begin(), v.end());
+// v.front() agora e o maior elemento
+
+// PUSH
+v.push_back(6);
+push_heap(v.begin(), v.end());
+
+// POP
+pop_heap(v.begin(), v.end()); // maior vai para o final
+v.pop_back();                 // remove o maior
+
+// Heap Sort
+sort_heap(v.begin(), v.end()); // vetor fica ordenado crescente
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Strings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Lower Bound e Upper Bound}
+
+As funções \textit{lower\_bound} e \textit{upper\_bound} da biblioteca padrão do C++ realizam buscas binárias em sequências ordenadas, ambas com complexidade $O(\log n)$. Elas são amplamente utilizadas em problemas de busca, contagem de ocorrências e determinação de intervalos.
+
+O \textit{lower\_bound} retorna um iterador para o primeiro elemento que não é menor que um valor $x$ (isto é, $\ge x$), enquanto o \textit{upper\_bound} retorna um iterador para o primeiro elemento estritamente maior que $x$.
+
+Dessa forma, o número de ocorrências de um valor $x$ em um vetor ordenado pode ser obtido por:
+\[
+\text{upper\_bound}(x) - \text{lower\_bound}(x)
+\]
+
+\begin{lstlisting}[caption={Uso de lower\_bound e upper\_bound em C++}, label={lst:lower_upper}]
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int countOccurrences(const vector<int>& v, int x) {
+    // v deve estar ordenado
+    auto itL = lower_bound(v.begin(), v.end(), x);
+    auto itU = upper_bound(v.begin(), v.end(), x);
+    return itU - itL;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Manipulação Básica (\texttt{std::string})}
+Concatenação (\texttt{+}) é \(O(N)\), \texttt{substr} é \(O(N)\).  
+Operações repetidas dentro de loops podem causar TLE.
+
+\begin{lstlisting}
+string s = "bananas";
+
+// 1. Substring: s.substr(inicio, tamanho)
+string sub = s.substr(2, 3); // "nan"
+
+// 1.1. substring até o final:
+string tail = s.substr(3);   // "anas"
+
+// 2. Busca: retorna indice ou string::npos
+size_t pos = s.find("na");   // primeira ocorrência
+if (pos != string::npos) cout << pos; // 2
+
+// 2.1. Começar busca em um índice específico:
+size_t p2 = s.find("na", 3); // 4
+
+// 2.2. busca reversa
+size_t pos2 = s.rfind("na"); // última ocorrência (4)
+
+// 2.3. busca de caracteres individuais
+size_t p3 = s.find_first_of("abc");  // encontra 'b' em 0
+size_t p4 = s.find_last_of("abc");   // encontra 'a' em 5
+
+// 3. Comparação
+if (s == "bananas") { /* ... */ }
+if (s < "carro") { /* comparação lexicográfica */ }
+
+// 4. Tamanho e modificação básica
+int n = s.size();   // ou s.length()
+s.push_back('x');   // bananasx
+s.pop_back();       // volta para bananas
+s += " split";      // concatenação
+s.clear();          // deixa a string vazia
+
+// 5. Remoção e inserção
+string t = "abcxyz";
+t.erase(3);         // remove a partir da pos 3 -> "abc"
+t = "abcxyz";
+t.erase(1, 3);      // remove [1..3) -> "ayz"
+t.insert(3, "###"); // "abc###xyz"
+
+// 6. Replace
+string r = "foo bar baz";
+r.replace(4, 3, "XXX");  // "foo XXX baz"
+
+// 7. Conversões
+string numStr = "123";
+int x = stoi(numStr);        // string -> int
+long long y = stoll(numStr); // string -> long long
+double d = stod("3.1415");   // string -> double
+
+string s2 = to_string(x);    // int -> string
+string s3 = to_string(d);    // double -> string
+
+// 8. Leitura de linha inteira (com espacos)
+// Se usou cin >> antes:
+// cin.ignore();
+getline(cin, s);
+
+// 9. Iteração sobre caracteres
+for (char c : s) { /* ... */ }
+for (int i = 0; i < (int)s.size(); i++) { char c = s[i]; }
+
+// 10. Transformações
+string u = "AbCDe";
+transform(u.begin(), u.end(), u.begin(), ::tolower); // "abcde"
+transform(u.begin(), u.end(), u.begin(), ::toupper); // "ABCDE"
+
+// 11. Split manual simples (usando find)
+string txt = "a,b,c,,d";
+vector<string> parts;
+size_t start = 0, end;
+while ((end = txt.find(',', start)) != string::npos) {
+    parts.push_back(txt.substr(start, end - start));
+    start = end + 1;
+}
+parts.push_back(txt.substr(start)); // último token
+
+// 12. Reversão de String
+reverse(s.begin(), s.end());
+
+// 13. Conversão char <-> int
+char cnum = '7';
+int iv = cnum - '0'; // 7
+char c2 = char(iv + '0'); // '7'
+
+// 14. Verificação de prefixo/sufixo (C++20)
+string p = "banana";
+bool ok1 = p.starts_with("ban");
+bool ok2 = p.ends_with("ana");
+
+// 15. Remoção de espaços (trim manual simples)
+string w = "   test  ";
+int L = 0, R = w.size() - 1;
+while (L <= R && isspace(w[L])) L++;
+while (R >= L && isspace(w[R])) R--;
+string trimmed = w.substr(L, R - L + 1); // "test"
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Z-Function}
+\textbf{O que é:} Calcula o array \(z\), onde \(z[i]\) é o comprimento do maior prefixo comum entre \(s\) e o sufixo que começa em \(i\).
+
+\textbf{Uso:} Similar ao KMP, mas útil em problemas de palíndromos, matching rápido ou compressão.
+
+\begin{lstlisting}
+// Time: O(N)
+vector<int> z_function(string s) {
+    int n = s.length();
+    vector<int> z(n);
+    for (int i = 1, l = 0, r = 0; i < n; ++i) {
+        if (i <= r)
+            z[i] = min(r - i + 1, z[i - l]);
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])
+            ++z[i];
+        if (i + z[i] - 1 > r)
+            l = i, r = i + z[i] - 1;
+    }
+    return z;
+}
+\end{lstlisting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{KMP (Prefix Function)}
+\textbf{O que é:} Calcula o vetor \(\pi\), onde \(\pi[i]\) é o comprimento do maior prefixo de \(s[0…i]\) que também é sufixo de \(s[0…i]\).
+
+\textbf{Uso:} Encontrar ocorrências de uma palavra \(P\) em um texto \(T\) em \(O(|T| + |P|)\).
+
+\textbf{Truque:} Monte \(S = P + \# + T\), onde \# é um caractere que não aparece no texto.  
+Se \(\pi[i] == |P|\), existe ocorrência terminando em \(i\).
+
+\begin{lstlisting}
+// Time: O(N)
+vector<int> prefix_function(string s) {
+    int n = s.length();
+    vector<int> pi(n);
+    for (int i = 1; i < n; i++) {
+        int j = pi[i-1];
+        while (j > 0 && s[i] != s[j])
+            j = pi[j-1];
+        if (s[i] == s[j])
+            j++;
+        pi[i] = j;
+    }
+    return pi;
+}
+\end{lstlisting}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Bitwise}
+
+O código a seguir demonstra o funcionamento dos operadores bitwise com os valores 5 ($0101_2$) e 3 ($0011_2$):
+
+\begin{lstlisting}[caption={Operações Bitwise em C++}, label={lst:bitwise}]
+#include <iostream>
+
+int main() {
+    // a = 5 (0101), b = 3 (0011)
+    unsigned int a = 5, b = 3;
+
+    int res_and = a & b;  // 0001 (1)
+    int res_or  = a | b;  // 0111 (7)
+    int res_xor = a ^ b;  // 0110 (6)
+    int res_not = ~a;     // Inverte bits
+    
+    // Deslocamentos
+    int left  = a << 1;   // 1010 (10)
+    int right = a >> 1;   // 0010 (2)
+
+    return 0;
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Teoria dos Números}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Teorema Fundamental da Aritmética}
+
+O Teorema Fundamental da Aritmética afirma que todo inteiro $n > 1$ pode ser escrito de forma única (a menos da ordem) como o produto de potências de números primos:
+\[
+n = p_1^{a_1} \cdot p_2^{a_2} \cdots p_k^{a_k},
+\]
+onde $p_i$ são primos distintos e $a_i \in \mathbb{N}$.
+
+Essa decomposição é a base para a definição de diversas funções aritméticas importantes, pois qualquer divisor de $n$ é obtido escolhendo, para cada primo $p_i$, um expoente $e_i$ tal que $0 \le e_i \le a_i$.
+
+\paragraph{Quantidade de divisores}
+A função $d(n)$, que conta o número de divisores positivos de $n$, é dada por:
+\[
+d(n) = \prod_{i=1}^{k} (a_i + 1).
+\]
+Essa fórmula decorre do fato de que cada primo $p_i$ contribui com $(a_i + 1)$ escolhas possíveis para o expoente na fatoração de um divisor.
+
+\paragraph{Soma dos divisores}
+A função $\sigma(n)$, que representa a soma de todos os divisores positivos de $n$, pode ser escrita como:
+
+\[
+\begin{aligned}
+\sigma(n)
+&= \prod_{i=1}^{k} \left( 1 + p_i + p_i^2 + \cdots + p_i^{a_i} \right) \\
+&= \prod_{i=1}^{k} \frac{p_i^{a_i+1} - 1}{p_i - 1}
+\end{aligned}
+\]
+
+Cada fator corresponde à soma de uma progressão geométrica associada às potências possíveis de um primo na decomposição dos divisores.
+
+\paragraph{Implementação computacional}
+A seguir apresenta-se uma função em \texttt{C++} que, dado um inteiro $n > 1$, calcula $d(n)$ e $\sigma(n)$ a partir de sua fatoração em primos.
+
+\begin{lstlisting}
+pair<long long, long long> divisores(long long n) {
+    long long d = 1;       // numero de divisores
+    long long sigma = 1;   // soma dos divisores
+
+    for (long long p = 2; p * p <= n; p++) {
+        if (n % p == 0) {
+            int a = 0;
+            while (n % p == 0) {
+                n /= p;
+                a++;
+            }
+            d *= (a + 1);
+
+            long long pot = 1;
+            long long soma = 1;
+            for (int i = 0; i < a; i++) {
+                pot *= p;
+                soma += pot;
+            }
+            sigma *= soma;
+        }
+    }
+
+    // Caso reste um primo maior que sqrt(n)
+    if (n > 1) {
+        d *= 2;
+        sigma *= (1 + n);
+    }
+
+    return {d, sigma};
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Identidade de Bézout}
+Para inteiros não nulos $a$ e $b$, seja $d = \gcd(a, b)$. Existem inteiros $x$ e $y$ (coeficientes de Bézout) tais que:
+$$ ax + by = d $$
+\textbf{Aplicação:} Usado no Algoritmo de Euclides Estendido para encontrar o Inverso Modular e resolver Equações Diofantinas Lineares.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Função Totiente de Euler ($\phi$)}
+Conta a quantidade de inteiros positivos menores ou iguais a $n$ que são coprimos com $n$.
+$$ \phi(n) = n \cdot \prod_{p|n} \left(1 - \frac{1}{p}\right) $$
+Se $n$ é primo, $\phi(n) = n-1$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Teorema de Euler} 
+Se $\gcd(a, m) = 1$, então:
+$$ a^{\phi(m)} \equiv 1 \pmod m $$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Pequeno Teorema de Fermat} 
+Se $p$ é primo:
+$$ a^{p-1} \equiv 1 \pmod p \implies a^{p-2} \equiv a^{-1} \pmod p $$
+(Útil para calcular inverso modular quando o módulo é primo $10^9+7$).
+
+\begin{lstlisting}
+// Time: O(log b)
+ll binpow(ll a, ll b, ll m) {
+    a %= m;
+    ll res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a % m;
+        a = a * a % m;
+        b >>= 1;
+    }
+    return res;
+}
+
+// Para inverso modular (quando m é primo):
+// binpow(n, MOD-2, MOD)
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Fibonacci (Fórmula de Binet)}
+O $n$-ésimo termo da sequência de Fibonacci ($F_0=0, F_1=1$) é dado por:
+$$ F_n = \frac{\varphi^n - \psi^n}{\varphi - \psi} = \frac{1}{\sqrt{5}} \left[ \left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n \right] $$
+\textit{Nota: Cuidado com precisão de float em C++. Para valores exatos grandes, use Exponenciação de Matrizes.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Progressão Aritmética (PA)}
+
+Diferença constante \(r\) entre termos consecutivos.
+
+\[
+a_n = a_1 + (n-1)r
+\]
+
+\begin{lstlisting}
+long long termoPA(long long a1, long long r, long long n) {
+    return a1 + (n - 1) * r;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Progressão Geométrica (PG)}
+
+Razão constante \(r\) entre termos consecutivos.
+
+\[
+a_n = a_1 \cdot r^{n-1}
+\]
+
+\begin{lstlisting}
+long long termoPG(long long a1, long long r, long long n) {
+    long long p = 1;
+    for (long long i = 0; i < n - 1; i++) p *= r;
+    return a1 * p;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Soma de Progressões}
+
+Soma dos \(n\) primeiros termos.
+
+PA:
+\[
+S_n = \frac{n}{2}\bigl(2a_1 + (n-1)r\bigr)
+\]
+
+\begin{lstlisting}
+long long somaPA(long long a1, long long r, long long n) {
+    return n * (2 * a1 + (n - 1) * r) / 2;
+}
+\end{lstlisting}
+
+PG (\(r \neq 1\)):
+\[
+S_n = a_1 \cdot \frac{r^n - 1}{r - 1}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}
+long long somaPG(long long a1, long long r, long long n) {
+    long long p = 1;
+    for (long long i = 0; i < n; i++) p *= r;
+    return a1 * (p - 1) / (r - 1);
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Soma de Quadrados}
+
+\[
+\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}
+\]
+
+\begin{lstlisting}
+long long somaQuadrados(long long n) {
+    return n * (n + 1) * (2 * n + 1) / 6;
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Combinatória}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Coeficiente Binomial}
+
+Número de maneiras de escolher \(k\) elementos dentre \(n\).
+
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!}
+\]
+
+Relação recursiva (Triângulo de Pascal):
+\[
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}
+\]
+
+\begin{lstlisting}
+// Preprocessamento: O(N)
+// Consulta: O(1)
+
+const int MAX = 1e6 + 5;
+const int MOD = 1e9 + 7;
+
+long long fact[MAX], invFact[MAX];
+
+long long binpow(long long a, long long e) {
+    long long r = 1;
+    while (e) {
+        if (e & 1) r = r * a % MOD;
+        a = a * a % MOD;
+        e >>= 1;
+    }
+    return r;
+}
+
+void precompute() {
+    fact[0] = 1;
+    for (int i = 1; i < MAX; i++)
+        fact[i] = fact[i - 1] * i % MOD;
+
+    invFact[MAX - 1] = binpow(fact[MAX - 1], MOD - 2);
+    for (int i = MAX - 2; i >= 0; i--)
+        invFact[i] = invFact[i + 1] * (i + 1) % MOD;
+}
+
+long long nCr(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    return fact[n] * invFact[k] % MOD * invFact[n - k] % MOD;
+}
+
+...
+
+int main() {
+    precompute();
+    // coeficiente binomial
+    cout << nCr(5, 2) << "\n";   // 10
+    cout << nCr(10, 3) << "\n";  // 120
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Princípio da Inclusão--Exclusão}
+
+Cálculo do tamanho da união de conjuntos finitos.
+
+\[
+\begin{aligned}
+|A \cup B|
+&= |A| + |B| - |A \cap B|, \\
+|A \cup B \cup C|
+&= |A| + |B| + |C| \\
+&\quad - |A \cap B|
+       - |A \cap C|
+       - |B \cap C| \\
+&\quad + |A \cap B \cap C|.
+\end{aligned}
+\]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Algoritmo de Euclides Estendido}
+
+\textbf{O que é:}  
+Enquanto o algoritmo de Euclides clássico apenas encontra o máximo divisor comum (MDC), a versão estendida também determina dois coeficientes inteiros \(x\) e \(y\) tais que:
+
+\[
+a \cdot x + b \cdot y = \gcd(a, b)
+\]
+
+\textbf{Quando usar:}
+
+\begin{itemize}
+    \item \textbf{Inverso modular:} sempre que for necessário realizar uma divisão no módulo \(M\), como em expressões do tipo \(\frac{P}{Q} \bmod M\).  
+    \item O inverso modular de \(Q\) (isto é, o número \(Q^{-1}\) tal que \(Q \cdot Q^{-1} \equiv 1 \pmod{M}\)) existe apenas quando \(\gcd(Q, M) = 1\).  
+    \item É imprescindível em problemas que envolvem aritmética modular, combinatória modular, CRT (Teorema Chinês dos Restos) e equações diofantinas básicas.
+\end{itemize}
+
+Tempo: $O(\log(\min(a,b)))$
+
+\begin{lstlisting}
+// Time: O(log(min(a, b)))
+ll gcdExtended(ll a, ll b, ll &x, ll &y) {
+    if (a == 0) {
+        x = 0;
+        y = 1;
+        return b;
+    }
+    ll x1, y1;
+    ll gcd = gcdExtended(b % a, a, x1, y1);
+    x = y1 - (b / a) * x1;
+    y = x1;
+    return gcd;
+}
+
+ll modInverse(ll a, ll m) {
+    ll x, y;
+    ll g = gcdExtended(a, m, x, y);
+    if (g != 1) return -1;
+    return (x % m + m) % m;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Crivo de Eratóstenes}
+
+Algoritmo para marcar números primos em um intervalo \([1, N]\), eliminando múltiplos de cada primo a partir de \(i^2\).
+
+Tempo:
+\[
+O(N \log \log N)
+\]
+
+\begin{lstlisting}
+// Preprocessamento: O(N log log N)
+// Consulta: O(1) para is_prime[x]
+
+const int MAXN = 1e7 + 5;
+vector<bool> is_prime(MAXN, true);
+
+void sieve() {
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i * i < MAXN; i++) {
+        if (is_prime[i]) {
+            for (int j = i * i; j < MAXN; j += i)
+                is_prime[j] = false;
+        }
+    }
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Crivo Linear (SPF — Smallest Prime Factor)}
+
+Crivo que gera todos os primos até \(N\) e armazena, para cada número, seu menor fator primo (SPF), permitindo fatorações rápidas.
+
+Tempo:
+\[
+O(N)
+\]
+
+\begin{lstlisting}
+// Preprocessamento: O(N)
+// Fatoracao: O(log N)
+
+const int MAXN = 1e7 + 5;
+int spf[MAXN];
+vector<int> primes;
+
+void linear_sieve() {
+    for (int i = 2; i < MAXN; ++i) {
+        if (spf[i] == 0) {
+            spf[i] = i;
+            primes.push_back(i);
+        }
+        for (int p : primes) {
+            if (p > spf[i] || (long long)i * p >= MAXN) break;
+            spf[i * p] = p;
+        }
+    }
+}
+
+int main() {
+    linear_sieve();
+
+    int x = 84;
+    while (x > 1) {
+        cout << spf[x] << " ";
+        x /= spf[x];
+    }
+    // Saida: 2 2 3 7
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Stars and Bars (Barras e Estrelas)}
+
+Técnica de contagem para distribuições de itens idênticos em grupos.
+
+Número de soluções inteiras \textbf{não negativas} de
+\[
+x_1 + x_2 + \cdots + x_k = n
+\]
+é:
+\[
+\binom{n + k - 1}{k - 1}
+\]
+
+Se todas as variáveis forem \textbf{positivas} (\(x_i \ge 1\)):
+\[
+\binom{n - 1}{k - 1}
+\]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Números de Catalan}
+
+Sequência clássica em problemas de contagem de estruturas recursivas.
+
+Sequência inicial:
+\[
+1,\;1,\;2,\;5,\;14,\;42,\;132,\ldots
+\]
+
+\[
+C_n = \frac{1}{n+1} \binom{2n}{n}
+\]
+
+\begin{lstlisting}
+// Usa nCr (coeficiente binomial)
+// MOD deve ser primo
+
+long long catalan(int n) {
+    return nCr(2 * n, n) * binpow(n + 1, MOD - 2) % MOD;
+}
+\end{lstlisting}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Teorema Chinês dos Restos (CRT)}
+
+Combina congruências com módulos coprimos em uma única solução.
+
+Para:
+\[
+\begin{cases}
+x \equiv a_1 \pmod{m_1} \\
+x \equiv a_2 \pmod{m_2}
+\end{cases}
+\qquad (\gcd(m_1, m_2)=1)
+\]
+
+a solução é única módulo \(M = m_1 m_2\).
+
+\[
+x \equiv a_1 m_2 y_1 + a_2 m_1 y_2 \pmod{M}
+\]
+
+onde:
+\[
+y_1 \equiv m_2^{-1} \pmod{m_1},
+\qquad
+y_2 \equiv m_1^{-1} \pmod{m_2}
+\]
+
+\begin{lstlisting}
+// CRT para dois módulos coprimos
+// Retorna x em [0, m1*m2)
+
+long long extgcd(long long a, long long b, long long &x, long long &y) {
+    if (b == 0) {
+        x = 1; y = 0;
+        return a;
+    }
+    long long x1, y1;
+    long long g = extgcd(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - y1 * (a / b);
+    return g;
+}
+
+long long crt(long long a1, long long m1,
+              long long a2, long long m2) {
+    long long x, y;
+    extgcd(m1, m2, x, y); // x = inv(m1), y = inv(m2)
+
+    long long M = m1 * m2;
+    long long res =
+        (a1 * m2 % M * y % M +
+         a2 * m1 % M * x % M) % M;
+
+    return (res + M) % M;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Divisão e Conquista}
+
+\subsection{Binary Search}
+
+Busca em vetor \textbf{ordenado}, dividindo o intervalo ao meio a cada passo.  
+Usada para encontrar elementos ou limites (primeira/última ocorrência).
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(\log N)\) \\
+\textbf{Espaço:} \(O(1)\)
+\end{itemize}
+
+\begin{lstlisting}
+ll binary_search_first(vector<ll> &vet, ll value) {
+    ll l = 0, r = (ll)vet.size() - 1;
+    ll ans = -1;
+    while (l <= r) {
+        ll mid = l + (r - l) / 2;
+        if (vet[mid] == value) {
+            ans = mid;       // encontrou
+            r = mid - 1;     // busca a primeira ocorrência
+        } 
+        else if (vet[mid] > value) {
+            r = mid - 1;
+        } 
+        else {
+            l = mid + 1;
+        }
+    }
+    return ans;
+}
+\end{lstlisting}
+
+
+
+\subsection{Ternary Search}
+
+Busca em função \textbf{unimodal} (cresce e depois decresce, ou vice-versa).  
+Divide o intervalo em três partes para encontrar máximo ou mínimo.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(\log N)\) \\
+\textbf{Espaço:} \(O(1)\)
+\end{itemize}
+
+\begin{lstlisting}
+double ternary_search(double l, double r) {
+    for (int i = 0; i < 200; i++) { // iterações suficientes para precisão
+        double m1 = l + (r - l) / 3.0;
+        double m2 = r - (r - l) / 3.0;
+
+        if (f(m1) < f(m2))
+            l = m1;   // máximo está à direita
+        else
+            r = m2;   // máximo está à esquerda
+    }
+    return (l + r) / 2.0;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Gulosos}
+
+\subsection{Codificação de Huffman}
+
+O algoritmo de Huffman gera códigos binários **prefix-free** para símbolos com base em suas frequências, minimizando o tamanho total da mensagem codificada.  
+Usado em compressão de dados, como ZIP, JPEG e MP3.
+
+\subsubsection{Complexidade}
+
+\begin{itemize}
+\textbf{Tempo:} \(O(n \log n)\), onde \(n\) é o número de símbolos \\
+\textbf{Espaço:} \(O(n)\) para a árvore e fila de prioridade
+\end{itemize}
+
+\subsubsection{Implementação em C++}
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    char ch;
+    int freq;
+    Node *left, *right;
+    Node(char c, int f) : ch(c), freq(f), left(nullptr), right(nullptr) {}
+};
+
+// Comparador para priority_queue (menor freq tem prioridade)
+struct Compare {
+    bool operator()(Node* a, Node* b) {
+        return a->freq > b->freq;
+    }
+};
+
+// Função recursiva para gerar códigos
+void generateCodes(Node* root, string code, unordered_map<char,string>& huffmanCode) {
+    if (!root) return;
+    if (!root->left && !root->right) {
+        huffmanCode[root->ch] = code;
+    }
+    generateCodes(root->left, code + "0", huffmanCode);
+    generateCodes(root->right, code + "1", huffmanCode);
+}
+
+// Constrói árvore de Huffman e retorna mapa de códigos
+unordered_map<char,string> huffmanCoding(const vector<char>& symbols, const vector<int>& freq) {
+    priority_queue<Node*, vector<Node*>, Compare> pq;
+
+    for (size_t i = 0; i < symbols.size(); i++)
+        pq.push(new Node(symbols[i], freq[i]));
+
+    while (pq.size() > 1) {
+        Node* left = pq.top(); pq.pop();
+        Node* right = pq.top(); pq.pop();
+
+        Node* merged = new Node('\0', left->freq + right->freq);
+        merged->left = left;
+        merged->right = right;
+        pq.push(merged);
+    }
+
+    Node* root = pq.top();
+    unordered_map<char,string> huffmanCode;
+    generateCodes(root, "", huffmanCode);
+    return huffmanCode;
+}
+\end{lstlisting}
+
+\subsubsection{Exemplo de Uso}
+
+\begin{lstlisting}
+vector<char> symbols = {'a','b','c','d','e','f'};
+vector<int> freq = {5, 9, 12, 13, 16, 45};
+
+unordered_map<char,string> codes = huffmanCoding(symbols, freq);
+
+// Exibe os códigos
+for (auto [ch, code] : codes)
+    cout << ch << ": " << code << "\n";
+\end{lstlisting}
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item Cria códigos binários **prefix-free**, garantindo decodificação sem ambiguidades
+    \item Usa \texttt{priority\_queue} para construir árvore eficiente
+    \item Frequências maiores recebem códigos mais curtos
+    \item Ideal para compressão de dados sem perda
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Programação Dinâmica}
+
+\subsection{Máxima Subsequência Comum (LCS)}
+
+O problema da LCS busca encontrar o comprimento da maior subsequência presente em duas sequências $X$ e $Y$. Utilizando Programação Dinâmica, definimos $DP[i][j]$ como o comprimento da LCS entre $X[0 \dots i]$ e $Y[0 \dots j]$.
+
+A relação de recorrência é dada por:
+
+\begin{equation}
+\begin{aligned}
+DP[i][j] 
+= \begin{cases}
+0, & i = 0 \text{ ou } j = 0 \\
+1 + DP[i-1][j-1], & \text{se } X[i] = Y[j] \\
+\max\big(DP[i-1][j], \\, DP[i][j-1]\big), & \text{se } \neq Y[j]
+\end{cases}
+\end{aligned}
+\end{equation}
+
+
+\subsection{Problema da Mochila (Knapsack 0/1)}
+
+Dado um conjunto de itens com pesos $wt$ e valores $val$, e uma mochila com capacidade $W$,
+o objetivo é maximizar o valor total sem exceder a capacidade.  
+Cada item pode ser escolhido \textbf{no máximo uma vez}.
+
+
+\subsubsection{Definição do DP}
+
+$DP[i][c]$ representa o \textbf{maior valor} usando os primeiros $i$ itens com capacidade $c$.
+
+\begin{equation}
+\begin{aligned}
+DP[i][c] = 
+\begin{cases} 
+DP[i-1][c] & \text{se } wt[i] > c \\
+\max(DP[i-1][c], val[i] + \\ +DP[i-1][c - wt[i]]) & \text{se } wt[i] \leq c
+\end{cases}
+\end{aligned}
+\end{equation}
+
+\subsubsection{Implementação (Tabela 2D)}
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(N \times W)\) \\
+\textbf{Espaço:} \(O(N \times W)\)
+\end{itemize}
+
+\begin{lstlisting}[caption={Mochila 0/1 com Programação Dinâmica 2D}]
+int knapsack(int W, vector<int>& wt, vector<int>& val, int n) {
+vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+
+for (int i = 1; i <= n; i++) {
+for (int c = 1; c <= W; c++) {
+if (wt[i - 1] <= c) {
+dp[i][c] = max(dp[i - 1][c],
+val[i - 1] + dp[i - 1][c - wt[i - 1]]);
+} else {
+dp[i][c] = dp[i - 1][c];
+}
+}
+}
+return dp[n][W];
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Implementação Otimizada (1D com Ponteiros)}
+
+Reduz o espaço usando apenas uma linha do DP.  
+A iteração reversa garante que cada item seja usado apenas uma vez.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(N \times W)\) \\
+\textbf{Espaço:} \(O(W)\)
+\end{itemize}
+
+\begin{lstlisting}[caption={Mochila 0/1 com DP 1D e Ponteiros}]
+int knapsack(int W, vector<int>& wt, vector<int>& val) {
+    vector<int> dp(W + 1, 0);
+    int *p = dp.data();  // ponteiro para o vetor DP
+
+    int n = wt.size();
+    for (int i = 0; i < n; i++) {
+        for (int c = W; c >= wt[i]; c--) {
+            p[c] = max(p[c], val[i] + p[c - wt[i]]);
+        }
+    }
+    return p[W];
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item DP 2D: mais intuitivo, mais memória
+    \item DP 1D: mesma lógica, muito mais eficiente
+    \item Iteração reversa é obrigatória no caso 0/1
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Caixeiro Viajante (TSP com Bitmask)}
+
+O problema busca o ciclo de menor custo que visita cada cidade exatamente uma vez. Para $N$ pequeno ($N \le 20$), utilizamos Programação Dinâmica com máscara de bits.
+
+O estado é $DP[mask][i]$, representando o custo mínimo para visitar o conjunto de cidades em $mask$ terminando na cidade $i$.
+A complexidade é $O(N^2 2^N)$.
+
+Recorrência:
+\[
+DP[mask][i] = \min_{j \in mask, j \neq i} (DP[mask \setminus \{i\}][j] + dist[j][i])
+\]
+
+\begin{lstlisting}[caption={TSP com DP e Bitmask}, label={lst:tsp}]
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+const int INF = 1e9;
+int n;
+int dist[20][20]; // Matriz de distancias
+int memo[1 << 20][20]; // Tabela de memoizacao
+
+// mask: bits setados indicam cidades visitadas
+// pos: cidade atual
+int tsp(int mask, int pos) {
+    // Se todas as cidades foram visitadas, retorna custo volta origem
+    if (mask == (1 << n) - 1) {
+        return dist[pos][0];
+    }
+    
+    if (memo[mask][pos] != -1) return memo[mask][pos];
+
+    int ans = INF;
+    for (int city = 0; city < n; city++) {
+        // Se a cidade nao foi visitada
+        if ((mask & (1 << city)) == 0) {
+            int newAns = dist[pos][city] + tsp(mask | (1 << city), city);
+            ans = min(ans, newAns);
+        }
+    }
+    return memo[mask][pos] = ans;
+}
+\end{lstlisting}
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Grafos}
+
+\subsection{Representações de Grafo em C++}
+
+\subsubsection{Struct (Arestas explícitas)}
+
+Usada quando o grafo é tratado como um conjunto de arestas.
+
+\begin{lstlisting}
+struct Edge {
+    int u, v, w;   // origem, destino, peso
+};
+
+vector<Edge> edges;
+
+// Exemplo de uso
+edges.push_back({1, 2, 5});
+edges.push_back({2, 3, 7});
+\end{lstlisting}
+
+Boa para algoritmos como \textit{Kruskal} e \textit{Bellman-Ford}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Lista de Adjacência}
+
+Cada vértice armazena seus vizinhos. Mais eficiente para grafos esparsos.
+
+\textbf{Complexidade:}
+\begin{itemize}
+    \textbf{Tempo:} \(O(V + E)\) \\
+\textbf{Espaço:} \(O(V + E)\)
+\end{itemize}
+
+\begin{lstlisting}
+int n; // numero de vertices
+vector<vector<int>> adj(n);
+
+// Aresta nao direcionada
+adj[1].push_back(2);
+adj[2].push_back(1);
+
+// Com peso
+vector<vector<pair<int,int>>> adjw(n);
+adjw[1].push_back({2, 5});
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Matriz de Adjacência}
+
+Matriz \(V \times V\) indicando conexões. Melhor para grafos densos.
+
+\textbf{Complexidade:}
+\begin{itemize}
+    \textbf{Tempo:} \(O(V^2)\) \\
+    \textbf{Espaço:} \(O(V^2)\)
+\end{itemize}
+
+\begin{lstlisting}
+int n;
+vector<vector<int>> mat(n, vector<int>(n, 0));
+
+// Aresta com peso
+mat[1][2] = 5;
+mat[2][1] = 5; // nao direcionado
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{DFS}
+
+A busca em profundidade (DFS) explora o grafo indo o mais fundo possível antes de retroceder.  
+Pode ser usada para análise estrutural, ordenação e detecção de ciclos.
+
+\subsubsection{DFS (Lista)}
+
+Explora apenas os vizinhos existentes de cada vértice.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(V + E)\) \\
+\textbf{Espaço:} \(O(V + E)\)
+\end{itemize}
+
+\begin{lstlisting}
+void dfs(int u,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) {
+            dfs(v, adj, visited);
+        }
+    }
+}
+
+...
+
+int n = adj.size();
+std::vector<bool> visited(n, false);
+dfs(0, adj, visited);   // inicia no nó 0
+
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{DFS (Matriz)}
+
+Para cada vértice, varre toda a linha da matriz.
+
+\begin{itemize}
+\textbf{Tempo:} \(O(V^2)\) \\
+\textbf{Espaço:} \(O(V^2)\)
+\end{itemize}
+
+\begin{lstlisting}
+void dfs(int u,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    visited[u] = true;
+    int n = adj.size();
+    for (int v = 0; v < n; ++v) {
+        if (adj[u][v] && !visited[v]) {
+            dfs(v, adj, visited);
+        }
+    }
+}
+...
+int n = adj.size();
+std::vector<bool> visited(n, false);
+dfs(0, adj, visited);
+
+
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{BFS}
+
+A busca em largura (BFS) percorre o grafo por níveis, visitando primeiro todos os
+vizinhos de um vértice antes de avançar.  
+É usada para menor caminho em grafos não ponderados e cálculo de distâncias.
+
+\subsubsection{BFS (Lista)}
+
+Visita apenas os vizinhos existentes usando fila.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(V + E)\) \\
+\textbf{Espaço:} \(O(V + E)\)
+\end{itemize}
+
+\begin{lstlisting}
+void bfs(int s,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    std::queue<int> q;
+    visited[s] = true;
+    q.push(s);
+
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v : adj[u]) {
+            if (!visited[v]) {
+                visited[v] = true;
+                q.push(v);
+            }
+        }
+    }
+}
+
+...
+
+int n = adj.size();
+std::vector<bool> visited(n, false);
+bfs(0, adj, visited);   // inicia no nó 0
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{BFS (Matriz)}
+
+Para cada vértice removido da fila, varre toda a linha da matriz.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(V^2)\) \\
+\textbf{Espaço:} \(O(V^2)\)
+\end{itemize}
+
+\begin{lstlisting}
+void bfs(int s,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    std::queue<int> q;
+    visited[s] = true;
+    q.push(s);
+
+    int n = adj.size();
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v = 0; v < n; ++v) {
+            if (adj[u][v] && !visited[v]) {
+                visited[v] = true;
+                q.push(v);
+            }
+        }
+    }
+}
+
+...
+
+int n = adj.size();
+std::vector<bool> visited(n, false);
+bfs(0, adj, visited);
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Dijkstra}
+
+Algoritmo para encontrar o menor caminho de uma fonte $s$ para todos os outros vértices.  
+Funciona apenas com arestas de peso não negativo.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Complexidade}
+
+\begin{itemize}
+\textbf{Lista de Adjacência:} 
+\begin{itemize}
+    \item Tempo: \(O((V+E)\log V)\) com heap
+    \item Espaço: \(O(V+E)\)
+\end{itemize}
+\textbf{Matriz de Adjacência:} 
+\begin{itemize}
+    \item Tempo: \(O(V^2)\)
+    \item Espaço: \(O(V^2)\)
+\end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Implementação (Lista de Adjacência + Heap)}
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+const ll INF = 1e18;
+
+void dijkstraList(int s, const vector<vector<pair<int,ll>>>& adj, vector<ll>& dist) {
+    int n = adj.size();
+    dist.assign(n, INF);
+    dist[s] = 0;
+
+    priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<>> pq;
+    pq.push({0, s});
+
+    while (!pq.empty()) {
+        auto [d, u] = pq.top(); pq.pop();
+        if (d > dist[u]) continue;
+
+        for (auto [v, w] : adj[u]) {
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Implementação (Matriz de Adjacência)}
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+const ll INF = 1e18;
+
+void dijkstraMatrix(int s, const vector<vector<ll>>& adj, vector<ll>& dist) {
+    int n = adj.size();
+    dist.assign(n, INF);
+    vector<bool> visited(n, false);
+    dist[s] = 0;
+
+    for (int i = 0; i < n; i++) {
+        int u = -1;
+        for (int j = 0; j < n; j++) {
+            if (!visited[j] && (u == -1 || dist[j] < dist[u]))
+                u = j;
+        }
+
+        if (dist[u] == INF) break;
+        visited[u] = true;
+
+        for (int v = 0; v < n; v++) {
+            if (adj[u][v] != INF) {
+                dist[v] = min(dist[v], dist[u] + adj[u][v]);
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item Lista + heap: eficiente em grafos esparsos
+    \item Matriz: simples, mas lento para grafos grandes
+    \item Ambos armazenam distâncias mínimas em \texttt{dist[v]}
+    \item Pode armazenar pais (\texttt{parent[v]}) para recuperar caminhos
+\end{itemize}
+
+
+\subsection{Ordenação Topológica (Topological Sort)}
+
+A ordenação topológica produz uma sequência linear de vértices de um **DAG (Directed Acyclic Graph)**
+de forma que para toda aresta $(u \to v)$, $u$ aparece antes de $v$ na sequência.  
+É útil em problemas de dependência, como compilação de tarefas ou pré-requisitos de cursos.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Complexidade}
+
+\begin{itemize}
+\textbf{Lista de Adjacência:} 
+\begin{itemize}
+    \item Tempo: \(O(V + E)\)
+    \item Espaço: \(O(V + E)\)
+\end{itemize}
+\textbf{Matriz de Adjacência:} 
+\begin{itemize}
+    \item Tempo: \(O(V^2)\)
+    \item Espaço: \(O(V^2)\)
+\end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Implementação (DFS + Lista de Adjacência)}
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+
+void topoDFS(int u, const vector<vector<int>>& adj, vector<bool>& visited, stack<int>& st) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) topoDFS(v, adj, visited, st);
+    }
+    st.push(u); // coloca após visitar todos os vizinhos
+}
+
+vector<int> topologicalSort(const vector<vector<int>>& adj) {
+    int n = adj.size();
+    vector<bool> visited(n, false);
+    stack<int> st;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) topoDFS(i, adj, visited, st);
+    }
+
+    vector<int> order;
+    while (!st.empty()) {
+        order.push_back(st.top());
+        st.pop();
+    }
+    return order;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Exemplo de Uso}
+
+\begin{lstlisting}
+int n = 6;
+vector<vector<int>> adj(n);
+adj[5].push_back(2);
+adj[5].push_back(0);
+adj[4].push_back(0);
+adj[4].push_back(1);
+adj[2].push_back(3);
+adj[3].push_back(1);
+
+vector<int> order = topologicalSort(adj);
+
+// order contém uma sequência topológica válida
+for (int u : order) cout << u << " ";
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item Funciona apenas para DAGs
+    \item DFS empilha os vértices após explorar os vizinhos
+    \item Pode ser adaptado para detectar ciclos
+    \item Lista de adjacência é eficiente para grafos esparsos
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Implementação (Kahn - BFS)}
+
+Outra abordagem é usar BFS (Kahn), removendo vértices com grau de entrada zero.
+
+\begin{lstlisting}
+vector<int> topologicalSortBFS(const vector<vector<int>>& adj) {
+    int n = adj.size();
+    vector<int> indeg(n, 0);
+    for (int u = 0; u < n; u++)
+        for (int v : adj[u])
+            indeg[v]++;
+
+    queue<int> q;
+    for (int i = 0; i < n; i++)
+        if (indeg[i] == 0) q.push(i);
+
+    vector<int> order;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        order.push_back(u);
+
+        for (int v : adj[u]) {
+            indeg[v]--;
+            if (indeg[v] == 0) q.push(v);
+        }
+    }
+    return order;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Resumo BFS (Kahn)}
+
+\begin{itemize}
+    \item Remove vértices com grau de entrada zero iterativamente
+    \item Fácil de detectar ciclos (se não processou todos os vértices)
+    \item Lista de adjacência mais eficiente que matriz
+\end{itemize}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Disjoint Sets (Union-Find)}
+
+Estrutura para gerenciar conjuntos disjuntos com operações de busca e união.  
+Muito usada para detectar ciclos e em algoritmos de MST (Kruskal).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Disjoint Sets (Representação por Struct)}
+
+Implementação clássica com compressão de caminho e união por rank.
+
+\textbf{Uso:} problemas grandes, melhor desempenho amortizado.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(\alpha(N))\) amortizado \\
+\textbf{Espaço:} \(O(N)\)
+\end{itemize}
+
+\begin{lstlisting}
+struct DSU {
+    vector<int> parent, rank;
+
+    DSU(int n) : parent(n), rank(n, 0) {
+        for (int i = 0; i < n; i++)
+            parent[i] = i;
+    }
+
+    int find(int x) {
+        if (parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    void unite(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a == b) return;
+        if (rank[a] < rank[b]) swap(a, b);
+        parent[b] = a;
+        if (rank[a] == rank[b]) rank[a]++;
+    }
+};
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Disjoint Sets (Representação por Vetor Simples)}
+
+Cada posição guarda o pai.  
+Valor \(-1\) indica que o vértice é raiz do conjunto.
+
+\textbf{Uso:} implementação rápida e simples.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(N)\) pior caso \\
+\textbf{Espaço:} \(O(N)\)
+\end{itemize}
+
+\begin{lstlisting}
+vector<int> parent;
+
+// inicializacao
+parent.assign(n, -1);
+
+int find(int x) {
+    while (parent[x] != -1)
+        x = parent[x];
+    return x;
+}
+
+void unite(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
+    if (ra != rb)
+        parent[rb] = ra;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Prim}
+
+Algoritmo para encontrar a MST expandindo a partir de um vértice inicial.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Prim (Lista de Adjacência)}
+
+\textbf{Uso:} grafos esparsos ou médios.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(E \log V)\) \\
+\textbf{Espaço:} \(O(V + E)\)
+\end{itemize}
+
+\begin{lstlisting}
+ll prim(int s, const vector<vector<pair<int,int>>>& adj) {
+    int n = adj.size();
+    vector<bool> used(n, false);
+    priority_queue<pair<ll,int>,
+        vector<pair<ll,int>>, greater<>> pq;
+
+    pq.push({0, s});
+    ll mst = 0;
+
+    while (!pq.empty()) {
+        auto [w, u] = pq.top(); pq.pop();
+        if (used[u]) continue;
+        used[u] = true;
+        mst += w;
+
+        for (auto [v, cost] : adj[u]) {
+            if (!used[v])
+                pq.push({cost, v});
+        }
+    }
+    return mst;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Prim (Matriz de Adjacência)}
+
+Varre a matriz para encontrar a menor aresta válida.
+
+\textbf{Uso:} grafos densos e pequenos.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(V^2)\) \\
+\textbf{Espaço:} \(O(V^2)\)
+\end{itemize}
+
+\begin{lstlisting}
+    ll prim(const vector<vector<int>>& mat) {
+        int n = mat.size();
+        vector<int> dist(n, INF);
+        vector<bool> used(n, false);
+        dist[0] = 0;
+        ll mst = 0;
+    
+        for (int i = 0; i < n; i++) {
+            int u = -1;
+            for (int j = 0; j < n; j++)
+                if (!used[j] && (u == -1 || dist[j] < dist[u]))
+                    u = j;
+    
+            used[u] = true;
+            mst += dist[u];
+    
+            for (int v = 0; v < n; v++) {
+                if (mat[u][v] && !used[v])
+                    dist[v] = min(dist[v], mat[u][v]);
+            }
+        }
+        return mst;
+    }
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Kruskal}
+
+Constrói a MST adicionando arestas em ordem crescente de peso.
+
+\textbf{Uso:} grafos esparsos com arestas explícitas.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(E \log E)\) \\
+\textbf{Espaço:} \(O(V)\)
+\end{itemize}
+
+\begin{lstlisting}
+struct Edge {
+    int u, v, w;
+};
+
+ll kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(),
+         [](const Edge& a, const Edge& b) {
+             return a.w < b.w;
+         });
+
+    DSU dsu(n);
+    ll mst = 0;
+
+    for (auto &e : edges) {
+        if (dsu.find(e.u) != dsu.find(e.v)) {
+            dsu.unite(e.u, e.v);
+            mst += e.w;
+        }
+    }
+    return mst;
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Kruskal (Disjoint Set por Vetor Simples)}
+
+Versão do Kruskal utilizando \textbf{Union-Find com vetor simples}.  
+Cada posição armazena o pai do vértice; valor \(-1\) indica raiz.
+
+\textbf{Uso:} implementação direta, didática, suficiente para grafos médios.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Tempo:} \(O(E \log E + E \cdot V)\) no pior caso \\
+\textbf{Espaço:} \(O(V)\)
+\end{itemize}
+
+\begin{lstlisting}
+struct Edge {
+    int u, v, w;
+};
+
+vector<int> parent;
+
+// inicializacao
+void init_dsu(int n) {
+    parent.assign(n, -1);
+}
+
+int find(int x) {
+    while (parent[x] != -1)
+        x = parent[x];
+    return x;
+}
+
+void unite(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
+    if (ra != rb)
+        parent[rb] = ra;
+}
+
+ll kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(),
+         [](const Edge& a, const Edge& b) {
+             return a.w < b.w;
+         });
+
+    init_dsu(n);
+    ll mst = 0;
+
+    for (auto &e : edges) {
+        if (find(e.u) != find(e.v)) {
+            unite(e.u, e.v);
+            mst += e.w;
+        }
+    }
+    return mst;
+}
+\end{lstlisting}
+
+\subsection{Floyd-Warshall (Todos os Pares)}
+
+O algoritmo de Floyd-Warshall calcula o caminho mínimo entre todos os pares de vértices em um grafo denso. Ele utiliza programação dinâmica com complexidade $O(V^3)$.
+
+A recorrência verifica se passar pelo vértice $k$ encurta o caminho de $i$ para $j$:
+\[
+dist[i][j] = \min(dist[i][j], dist[i][k] + dist[k][j])
+\]
+
+\begin{lstlisting}[caption={Floyd-Warshall em C++}, label={lst:floyd}]
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+const int INF = 1e9;
+
+// adj: Matriz de adjacencia onde adj[i][j] e o peso
+void floydWarshall(int V, vector<vector<int>>& dist) {
+    // k deve ser o loop mais externo
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] != INF && dist[k][j] != INF) {
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+
+\subsection{Bellman-Ford (Pesos Negativos)}
+
+O algoritmo de Bellman-Ford encontra o caminho mínimo de uma fonte única, permitindo arestas com pesos negativos. Sua complexidade é $O(V \times E)$. Se, após relaxar as arestas $V-1$ vezes, ainda for possível reduzir uma distância, o grafo contém um ciclo negativo.
+
+Condição de relaxamento para aresta $(u, v)$ com peso $w$:
+\[
+\text{Se } dist[u] + w < dist[v] \implies dist[v] = dist[u] + w
+\]
+
+\begin{lstlisting}[caption={Bellman-Ford em C++}, label={lst:bellman}]
+#include <vector>
+using namespace std;
+
+struct Edge { int u, v, weight; };
+const int INF = 1e9;
+
+void bellmanFord(int V, int src, vector<Edge>& edges, vector<int>& dist) {
+    dist.assign(V, INF);
+    dist[src] = 0;
+
+    // Relaxa todas as arestas V-1 vezes
+    for (int i = 0; i < V - 1; i++) {
+        for (auto& e : edges) {
+            if (dist[e.u] != INF && dist[e.u] + e.weight < dist[e.v]) {
+                dist[e.v] = dist[e.u] + e.weight;
+            }
+        }
+    }
+    // Nota: Um loop extra aqui detectaria ciclos negativos
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Fluxo Máximo (Edmonds-Karp)}
+
+O problema consiste em encontrar o maior fluxo possível de uma fonte $s$ até um
+sumidouro $t$ em uma rede capacitada.  
+O algoritmo de Edmonds-Karp é uma implementação do Ford-Fulkerson que usa
+\textbf{BFS} para encontrar caminhos aumentantes mínimos em número de arestas.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Ideia Central}
+
+Mantém-se um \textbf{grafo residual}, onde cada aresta indica quanto fluxo ainda
+pode passar.
+
+\begin{equation}    
+c_r(u, v) = c(u, v) - f(u, v)
+\end{equation}
+
+Onde:
+\begin{itemize}
+    \item \(c_r(u, v)\) é a capacidade residual
+    \item \(c(u, v)\) é a capacidade da aresta
+    \item \(f(u, v)\) é o fluxo atual
+\end{itemize}
+
+A cada BFS:
+\begin{itemize}
+    \item encontra-se um caminho aumentante
+    \item calcula-se o gargalo
+    \item atualizam-se as capacidades residuais
+\end{itemize}
+
+\subsubsection{Complexidade}
+
+\begin{itemize}
+\textbf{Tempo:} \(O(V \cdot E^2)\) \\
+\textbf{Espaço:} \(O(V^2)\) (matriz residual)
+\end{itemize}
+
+
+\subsubsection{Implementação (BFS + Matriz Residual)}
+
+\begin{lstlisting}
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+const int INF = 1e9;
+
+int capacity[100][100]; // matriz residual
+vector<int> adj[100];   // lista de adjacencia
+
+int bfs(int s, int t, vector<int>& parent) {
+    fill(parent.begin(), parent.end(), -1);
+    parent[s] = -2;
+
+    queue<pair<int,int>> q;
+    q.push({s, INF});
+
+    while (!q.empty()) {
+        auto [u, flow] = q.front(); q.pop();
+
+        for (int v : adj[u]) {
+            if (parent[v] == -1 && capacity[u][v] > 0) {
+                parent[v] = u;
+                int new_flow = min(flow, capacity[u][v]);
+                if (v == t) return new_flow;
+                q.push({v, new_flow});
+            }
+        }
+    }
+    return 0;
+}
+
+int maxFlow(int s, int t, int n) {
+    int flow = 0;
+    vector<int> parent(n);
+
+    while (int new_flow = bfs(s, t, parent)) {
+        flow += new_flow;
+        int cur = t;
+        while (cur != s) {
+            int prev = parent[cur];
+            capacity[prev][cur] -= new_flow;
+            capacity[cur][prev] += new_flow; // aresta reversa
+            cur = prev;
+        }
+    }
+    return flow;
+}
+\end{lstlisting}
+
+
+\subsubsection{Uso com Ponteiros}
+
+A matriz de capacidades é contígua em memória, permitindo acesso direto via ponteiro.
+
+\begin{lstlisting}
+// Ponteiro para a matriz de capacidade
+int (*cap)[100] = capacity;
+
+// Exemplo de acesso
+int cap_uv = cap[u][v];
+cap[u][v] -= f;     // atualiza residual
+cap[v][u] += f;     // cria/atualiza reversa
+\end{lstlisting}
+
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item BFS garante número limitado de iterações
+    \item Matriz facilita controle do grafo residual
+    \item Ideal para grafos pequenos e médios
+    \item Base para algoritmos mais avançados (Dinic)
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Flood Fill}
+
+Algoritmo para preencher regiões conectadas em uma matriz ou imagem.  
+Pode ser implementado via \textbf{DFS} ou \textbf{BFS}.  
+Usado em processamento de imagens, jogos (preenchimento de áreas) e contagem de componentes conectadas.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Complexidade}
+
+\begin{itemize}
+\textbf{Tempo:} \(O(N \times M)\) no pior caso (toda a matriz) \\
+\textbf{Espaço:} \(O(N \times M)\) (DFS recursivo) ou \(O(N \times M)\) para fila BFS
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Implementação (DFS)}
+
+\begin{lstlisting}
+#include <vector>
+using namespace std;
+
+// 4 direcoes: cima, baixo, esquerda, direita
+int dx[4] = {0, 0, 1, -1};
+int dy[4] = {1, -1, 0, 0};
+
+void floodFillDFS(vector<vector<int>>& grid, int x, int y, int target, int color) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    if (x < 0 || x >= n || y < 0 || y >= m) return;
+    if (grid[x][y] != target) return;
+
+    grid[x][y] = color; // pinta
+
+    for (int dir = 0; dir < 4; dir++) {
+        floodFillDFS(grid, x + dx[dir], y + dy[dir], target, color);
+    }
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Exemplo de Uso}
+
+\begin{lstlisting}
+vector<vector<int>> grid = {
+    {1,1,0,0},
+    {1,0,0,1},
+    {0,0,1,1},
+    {0,1,1,0}
+};
+
+int x = 0, y = 0;      // ponto inicial
+int target = grid[x][y]; 
+int color = 2;          // nova cor
+
+floodFillDFS(grid, x, y, target, color);
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item DFS recursivo é simples, BFS evita stack overflow
+    \item Funciona para qualquer tipo de conectividade (4 ou 8 direções)
+    \item Pode ser adaptado para contar componentes conectadas
+\end{itemize}
+
+\subsubsection{Implementação (BFS)}
+
+Versão iterativa usando fila. Evita stack overflow em matrizes grandes.
+
+\begin{lstlisting}
+#include <vector>
+#include <queue>
+using namespace std;
+
+// 4 direções: cima, baixo, esquerda, direita
+int dx[4] = {0, 0, 1, -1};
+int dy[4] = {1, -1, 0, 0};
+
+void floodFillBFS(vector<vector<int>>& grid, int x, int y, int target, int color) {
+    int n = grid.size();
+    int m = grid[0].size();
+    if (grid[x][y] != target) return;
+
+    queue<pair<int,int>> q;
+    q.push({x, y});
+    grid[x][y] = color;
+
+    while (!q.empty()) {
+        auto [cx, cy] = q.front(); q.pop();
+
+        for (int dir = 0; dir < 4; dir++) {
+            int nx = cx + dx[dir];
+            int ny = cy + dy[dir];
+
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] == target) {
+                grid[nx][ny] = color;
+                q.push({nx, ny});
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Exemplo de Uso}
+
+\begin{lstlisting}
+vector<vector<int>> grid = {
+    {1,1,0,0},
+    {1,0,0,1},
+    {0,0,1,1},
+    {0,1,1,0}
+};
+
+int x = 0, y = 0;      // ponto inicial
+int target = grid[x][y]; 
+int color = 2;          // nova cor
+
+floodFillBFS(grid, x, y, target, color);
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item BFS garante evitar stack overflow
+    \item Ideal para matrizes grandes ou gráficos densos
+    \item Funciona para qualquer tipo de conectividade (4 ou 8 direções)
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Árvores}
+
+\subsection{Segment Tree}
+
+Estrutura para consultas e atualizações em intervalos.  
+Muito usada para soma, mínimo, máximo, gcd, etc.
+
+\textbf{Complexidade:}
+\begin{itemize}
+\textbf{Construção:} \(O(N)\) \\
+\textbf{Query:} \(O(\log N)\) \\
+\textbf{Update:} \(O(\log N)\) \\
+\textbf{Espaço:} \(O(2N)\) (iterativa)
+\end{itemize}
+
+
+\subsubsection{Implementação Iterativa (Soma)}
+
+Árvore armazenada em vetor, folhas em \([n, 2n)\).
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int n;
+vector<ll> tree;
+
+// CONSTRUÇÃO — O(N)
+void build(const vector<int>& input) {
+    for (int i = 0; i < n; i++)
+        tree[n + i] = input[i];
+
+    for (int i = n - 1; i >= 1; i--)
+        tree[i] = tree[2 * i] + tree[2 * i + 1];
+}
+
+// UPDATE — O(log N)
+void update(int p, int value) {
+    p += n;            // vai para a folha
+    tree[p] = value;  // atualiza
+
+    for (p /= 2; p >= 1; p /= 2)
+        tree[p] = tree[2 * p] + tree[2 * p + 1];
+}
+
+// QUERY — O(log N)
+// intervalo [l, r], 0-based
+ll query(int l, int r) {
+    ll sum = 0;
+    l += n; r += n;
+
+    while (l <= r) {
+        if (l & 1) sum += tree[l++];
+        if (!(r & 1)) sum += tree[r--];
+        l >>= 1; r >>= 1;
+    }
+    return sum;
+}
+\end{lstlisting}
+
+
+\subsubsection{Uso com Ponteiros}
+
+A árvore é armazenada em memória contígua, permitindo acesso direto via ponteiro.
+
+\begin{lstlisting}
+// Ponteiro para os dados internos da árvore
+ll *p = tree.data();
+
+// Exemplo de acesso
+ll raiz = p[1];        // nó raiz
+ll primeira_folha = p[n];
+\end{lstlisting}
+
+
+\subsubsection{Exemplo de Uso}
+
+\begin{lstlisting}
+int q;
+cin >> n >> q;
+
+tree.assign(2 * n, 0);
+
+vector<int> input(n);
+for (int i = 0; i < n; i++)
+    cin >> input[i];
+
+build(input);
+
+while (q--) {
+    int type, a, b;
+    cin >> type >> a >> b;
+
+    if (type == 1) {
+        update(a - 1, b);          // atualiza posição
+    } else {
+        cout << query(a - 1, b - 1) << "\n"; // soma no intervalo
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Resumo Prático}
+
+\begin{itemize}
+    \item Iterativa é mais simples e usa menos memória
+    \item Ponteiros permitem acesso direto aos nós
+    \item Ideal para problemas com muitas queries e updates
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\printbibliography
+
+\end{document}

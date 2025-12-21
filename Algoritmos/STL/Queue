@@ -1,0 +1,15 @@
+queue<int> q;
+
+q.push(10);   // Insere no final
+q.push(20);
+
+int first = q.front();   // Primeiro (10)
+int last  = q.back();    // Ultimo (20)
+
+q.pop();     // Remove o primeiro (10)
+
+// "ITERAÇÃO" (Destrutiva)
+while (!q.empty()) {
+    cout << q.front() << " ";
+    q.pop();
+}

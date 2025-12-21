@@ -1,0 +1,41 @@
+struct Edge {
+    int u, v, w;
+};
+
+vector<int> parent;
+
+// inicializacao
+void init_dsu(int n) {
+    parent.assign(n, -1);
+}
+
+int find(int x) {
+    while (parent[x] != -1)
+        x = parent[x];
+    return x;
+}
+
+void unite(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
+    if (ra != rb)
+        parent[rb] = ra;
+}
+
+ll kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(),
+         [](const Edge& a, const Edge& b) {
+             return a.w < b.w;
+         });
+
+    init_dsu(n);
+    ll mst = 0;
+
+    for (auto &e : edges) {
+        if (find(e.u) != find(e.v)) {
+            unite(e.u, e.v);
+            mst += e.w;
+        }
+    }
+    return mst;
+}

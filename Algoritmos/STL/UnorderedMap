@@ -1,0 +1,11 @@
+unordered_map<int, int> um;
+
+um[5] = 100;
+um[2] = 200;
+
+// Funcoes identicas ao map: insert, erase, find, count...
+
+// ITERAÇÃO (Ordem aleatoria/indefinida)
+for (auto it = um.begin(); it != um.end(); it++) {
+    cout << it->first << " -> " << it->second << endl;
+}

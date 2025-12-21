@@ -1,0 +1,15 @@
+void dfs(int u,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    visited[u] = true;
+    int n = adj.size();
+    for (int v = 0; v < n; ++v) {
+        if (adj[u][v] && !visited[v]) {
+            dfs(v, adj, visited);
+        }
+    }
+}
+...
+int n = adj.size();
+std::vector<bool> visited(n, false);
+dfs(0, adj, visited);

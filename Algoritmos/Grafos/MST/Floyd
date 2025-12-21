@@ -1,0 +1,19 @@
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+const int INF = 1e9;
+
+// adj: Matriz de adjacencia onde adj[i][j] e o peso
+void floydWarshall(int V, vector<vector<int>>& dist) {
+    // k deve ser o loop mais externo
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] != INF && dist[k][j] != INF) {
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+}

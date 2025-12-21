@@ -1,0 +1,34 @@
+int knapsack(int W, vector<int>& wt, vector<int>& val, int n) {
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    for (int i = 1; i <= n; i++) {
+        for (int c = 1; c <= W; c++) {
+            if (wt[i - 1] <= c) {
+                dp[i][c] = max(dp[i - 1][c],
+                val[i - 1] + dp[i - 1][c - wt[i - 1]]);
+            } else {
+                dp[i][c] = dp[i - 1][c];
+            }
+        }
+    }
+    return dp[n][W];
+}
+
+
+
+
+
+
+
+
+int knapsack(int W, vector<int>& wt, vector<int>& val) {
+    vector<int> dp(W + 1, 0);
+    int *p = dp.data();  // ponteiro para o vetor DP
+
+    int n = wt.size();
+    for (int i = 0; i < n; i++) {
+        for (int c = W; c >= wt[i]; c--) {
+            p[c] = max(p[c], val[i] + p[c - wt[i]]);
+        }
+    }
+    return p[W];
+}

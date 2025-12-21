@@ -1,0 +1,31 @@
+// Travelling salesman problem
+
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+const int INF = 1e9;
+int n;
+int dist[20][20]; // Matriz de distancias
+int memo[1 << 20][20]; // Tabela de memoizacao
+
+// mask: bits setados indicam cidades visitadas
+// pos: cidade atual
+int tsp(int mask, int pos) {
+    // Se todas as cidades foram visitadas, retorna custo volta origem
+    if (mask == (1 << n) - 1) {
+        return dist[pos][0];
+    }
+    
+    if (memo[mask][pos] != -1) return memo[mask][pos];
+
+    int ans = INF;
+    for (int city = 0; city < n; city++) {
+        // Se a cidade nao foi visitada
+        if ((mask & (1 << city)) == 0) {
+            int newAns = dist[pos][city] + tsp(mask | (1 << city), city);
+            ans = min(ans, newAns);
+        }
+    }
+    return memo[mask][pos] = ans;
+}

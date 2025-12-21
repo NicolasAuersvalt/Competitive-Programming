@@ -1,0 +1,55 @@
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+const int INF = 1e9;
+
+int capacity[100][100]; // matriz residual
+vector<int> adj[100];   // lista de adjacencia
+
+int bfs(int s, int t, vector<int>& parent) {
+    fill(parent.begin(), parent.end(), -1);
+    parent[s] = -2;
+
+    queue<pair<int,int>> q;
+    q.push({s, INF});
+
+    while (!q.empty()) {
+        auto [u, flow] = q.front(); q.pop();
+
+        for (int v : adj[u]) {
+            if (parent[v] == -1 && capacity[u][v] > 0) {
+                parent[v] = u;
+                int new_flow = min(flow, capacity[u][v]);
+                if (v == t) return new_flow;
+                q.push({v, new_flow});
+            }
+        }
+    }
+    return 0;
+}
+
+int maxFlow(int s, int t, int n) {
+    int flow = 0;
+    vector<int> parent(n);
+
+    while (int new_flow = bfs(s, t, parent)) {
+        flow += new_flow;
+        int cur = t;
+        while (cur != s) {
+            int prev = parent[cur];
+            capacity[prev][cur] -= new_flow;
+            capacity[cur][prev] += new_flow; // aresta reversa
+            cur = prev;
+        }
+    }
+    return flow;
+}
+
+int (*cap)[100] = capacity;
+
+// Exemplo de acesso
+int cap_uv = cap[u][v];
+cap[u][v] -= f;     // atualiza residual
+cap[v][u] += f;     // cria/atualiza reversa

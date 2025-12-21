@@ -1,0 +1,27 @@
+// CRT para dois módulos coprimos
+// Retorna x em [0, m1*m2)
+
+long long extgcd(long long a, long long b, long long &x, long long &y) {
+    if (b == 0) {
+        x = 1; y = 0;
+        return a;
+    }
+    long long x1, y1;
+    long long g = extgcd(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - y1 * (a / b);
+    return g;
+}
+
+long long crt(long long a1, long long m1,
+              long long a2, long long m2) {
+    long long x, y;
+    extgcd(m1, m2, x, y); // x = inv(m1), y = inv(m2)
+
+    long long M = m1 * m2;
+    long long res =
+        (a1 * m2 % M * y % M +
+         a2 * m1 % M * x % M) % M;
+
+    return (res + M) % M;
+}

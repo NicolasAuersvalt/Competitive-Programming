@@ -1,0 +1,25 @@
+map<string, int> mp;
+
+mp["nico"] = 10;   // Insere ou atualiza
+mp["las"]  = 20;
+
+// Verificar existencia
+if (mp.count("nico")) { ... }   // Retorna 1 se existe, 0 se nao
+
+// Busca com iterador (nao cria chave lixo)
+auto it = mp.find("chave_inexistente");
+if (it == mp.end()) cout << "Nao achou";
+
+// Lower/Upper Bound
+auto lb = mp.lower_bound("nico");   // primeira chave >= "nico"
+
+// ITERAÇÃO (ordem crescente das chaves)
+for (auto it = mp.begin(); it != mp.end(); it++) {
+    // it->first = Chave, it->second = Valor
+    cout << it->first << ": " << it->second << endl;
+}
+
+// Range-based (C++17 structured binding)
+for (auto [key, val] : mp) {
+    cout << key << ": " << val << endl;
+}

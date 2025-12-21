@@ -1,0 +1,6 @@
+// Usa nCr (coeficiente binomial)
+// MOD deve ser primo
+
+long long catalan(int n) {
+    return nCr(2 * n, n) * binpow(n + 1, MOD - 2) % MOD;
+}

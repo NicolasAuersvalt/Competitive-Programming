@@ -1,0 +1,23 @@
+void bfs(int s,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    std::queue<int> q;
+    visited[s] = true;
+    q.push(s);
+
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v : adj[u]) {
+            if (!visited[v]) {
+                visited[v] = true;
+                q.push(v);
+            }
+        }
+    }
+}
+
+...
+
+int n = adj.size();
+std::vector<bool> visited(n, false);
+bfs(0, adj, visited);   // inicia no nó 0

@@ -1,0 +1,16 @@
+void dfs(int u,
+         const std::vector<std::vector<int>>& adj,
+         std::vector<bool>& visited) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) {
+            dfs(v, adj, visited);
+        }
+    }
+}
+
+...
+
+int n = adj.size();
+std::vector<bool> visited(n, false);
+dfs(0, adj, visited);   // inicia no nó 0

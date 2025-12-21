@@ -1,0 +1,21 @@
+struct Edge {
+    int u, v, w;
+};
+
+ll kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(),
+         [](const Edge& a, const Edge& b) {
+             return a.w < b.w;
+         });
+
+    DSU dsu(n);
+    ll mst = 0;
+
+    for (auto &e : edges) {
+        if (dsu.find(e.u) != dsu.find(e.v)) {
+            dsu.unite(e.u, e.v);
+            mst += e.w;
+        }
+    }
+    return mst;
+}

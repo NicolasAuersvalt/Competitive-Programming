@@ -1,0 +1,35 @@
+// SET
+set<int> s;
+s.insert(10);
+s.insert(5);
+s.insert(10); // Ignorado no set (aceito no multiset)
+
+// Verificar existencia
+if (s.count(5)) {
+    ...
+}
+
+// Remover elemento
+s.erase(5);
+
+// Lower Bound (primeiro elemento >= 7)
+auto it = s.lower_bound(7);
+if (it != s.end()) cout << *it;
+
+// Iteracao em ordem crescente
+for (auto it = s.begin(); it != s.end(); it++) {
+    cout << *it << " ";
+}
+
+// Range-based
+for (int x : s) cout << x << " ";
+
+// MULTISET
+multiset<int> ms;
+ms.insert(10);
+ms.insert(10);
+ms.insert(10);
+
+// ms.erase(10) remove TODAS as copias
+// Para remover apenas UMA:
+ms.erase(ms.find(10));

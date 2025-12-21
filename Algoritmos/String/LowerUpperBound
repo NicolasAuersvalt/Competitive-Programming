@@ -1,0 +1,10 @@
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int countOccurrences(const vector<int>& v, int x) {
+    // v deve estar ordenado
+    auto itL = lower_bound(v.begin(), v.end(), x);
+    auto itU = upper_bound(v.begin(), v.end(), x);
+    return itU - itL;
+}

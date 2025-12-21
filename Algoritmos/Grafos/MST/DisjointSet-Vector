@@ -1,0 +1,17 @@
+vector<int> parent;
+
+// inicializacao
+parent.assign(n, -1);
+
+int find(int x) {
+    while (parent[x] != -1)
+        x = parent[x];
+    return x;
+}
+
+void unite(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
+    if (ra != rb)
+        parent[rb] = ra;
+}

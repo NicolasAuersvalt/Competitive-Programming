@@ -1,0 +1,9 @@
+struct Edge {
+    int u, v, w;   // origem, destino, peso
+};
+
+vector<Edge> edges;
+
+// Exemplo de uso
+edges.push_back({1, 2, 5});
+edges.push_back({2, 3, 7});

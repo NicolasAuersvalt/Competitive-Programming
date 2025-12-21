@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main() {
+    // a = 5 (0101), b = 3 (0011)
+    unsigned int a = 5, b = 3;
+
+    int res_and = a & b;  // 0001 (1)
+    int res_or  = a | b;  // 0111 (7)
+    int res_xor = a ^ b;  // 0110 (6)
+    int res_not = ~a;     // Inverte bits
+    
+    // Deslocamentos
+    int left  = a << 1;   // 1010 (10)
+    int right = a >> 1;   // 0010 (2)
+
+    return 0;
+}
