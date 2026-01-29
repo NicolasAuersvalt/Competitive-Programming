@@ -1,0 +1,133 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double ld;
+
+typedef pair<int, int> pii;
+
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+
+typedef vector<vector<int>> graph;
+typedef vector<vector<pair<int,int>>> wgraph; // (vizinho, peso)
+
+
+const int INF = 1e9; // Infinito para Inteiros
+const ll INFLL = 1e18; // Infinito para Long Long 
+const ld EPS = 1e-9; // Tolerância para números de ponto flutuante
+const ld PI = acos(-1.0L); // Valor de Pi com máxima precisão
+
+#define DEBUG 1
+
+
+// Retorna o "heavy child" de cada nó
+vi heavy;
+vi sz;
+vi tin, tout, node_at;
+int timer = 0;
+
+void dfs_sz(int u, int p, graph &gr) {
+    sz[u] = 1;
+    int max_subtree = -1;
+    for (int v : gr[u]) {
+        if (v != p) {
+            dfs_sz(v, u, gr);
+            sz[u] += sz[v];
+            if (sz[v] > max_subtree) {
+                max_subtree = sz[v];
+                heavy[u] = v; // O filho mais pesado deste nó
+            }
+        }
+    }
+    tin[u] = ++timer;
+    node_at[timer] = u;
+    tout[u] = timer;
+}
+
+vector<int> preprocess(graph &gr, int n) {
+    heavy.assign(n + 1, -1);
+    sz.assign(n + 1, 0);
+    tin.assign(n + 1, 0);
+    tout.assign(n + 1, 0);
+    node_at.assign(n + 1, 0);
+    timer = 0;
+    dfs_sz(1, 0, gr); 
+    return heavy;
+}
+
+void dsu(int u, int p, bool keep, graph &gr, vi &res, vi &counter, vi &valores, vi &peso) {
+    // 1. Resolve para os filhos leves e limpa o counter
+    for (int v : gr[u]) {
+        if (v != p && v != peso[u]) {
+            dsu(v, u, false, gr, res, counter, valores, peso);
+        }
+    }
+
+    // 2. Resolve para o filho pesado e MANTÉM o counter
+    if (peso[u] != -1) {
+        dsu(peso[u], u, true, gr, res, counter, valores, peso);
+    }
+
+    // 3. Adiciona os valores dos filhos leves + o valor do próprio nó u
+    auto add = [&](int node) {
+        counter[valores[node - 1]]++; // -1 se os valores forem 0-indexed e nós 1-indexed
+    };
+
+    for (int v : gr[u]) {
+        if (v != p && v != peso[u]) {
+            for (int t = tin[v]; t <= tout[v]; t++) {
+                add(node_at[t]);
+            }
+        }
+    }
+    add(u);
+
+    // 4. Guarda o resultado desejado (ex: frequência do próprio valor na subárvore)
+    res[u - 1] = counter[valores[u - 1]];
+
+    // 5. Se não for para manter, limpa tudo o que esta subárvore adicionou
+    if (!keep) {
+        for (int t = tin[u]; t <= tout[u]; t++) {
+            counter[valores[node_at[t] - 1]]--;
+        }
+    }
+}
+
+void solve() {
+    int a; cin >> a;
+    vi valores(a);
+    for (int i = 0; i < a; i++) cin >> valores[i];
+    
+    graph gr(a + 1);
+    for (int i = 0; i < a - 1; i++) {
+        int x, y; cin >> x >> y;
+        gr[x].push_back(y);
+        gr[y].push_back(x);
+    }
+
+    vi res(a, 0);
+    vi counter(100005, 0); 
+
+    vi peso = preprocess(gr, a);
+    dsu(1, 0, true, gr, res, counter, valores, peso);
+
+    for (int i = 0; i < a; i++) cout << res[i] << " ";
+    cout << endl;
+
+}
+
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    #if DEBUG
+    cerr << "Debug Ativado" << endl;
+    #endif
+
+    solve();
+
+    return 0;
+}
