@@ -21,34 +21,14 @@ const ld PI = acos(-1.0L); // Valor de Pi com máxima precisão
 
 #define DEBUG 1
 
-const int MAXN = 1e6 + 5;
-vector<bool> is_prime(MAXN, true);
-
-void sieve() {
-    is_prime[0] = is_prime[1] = false;
-    for (int i = 2; i * i < MAXN; i++) {
-        if (is_prime[i]) {
-            for (int j = i * i; j < MAXN; j += i)
-                is_prime[j] = false;
-        }
-    }
-}
-
-
-
 void solve() {
-	int n; cin >> n;
-	sieve();
-	for(int y=n-4; y>3; y--){
-		int x = n-y;
-		//cout << "x = " << x << " y = " << y << endl;
-		if(!is_prime[x] && !is_prime[y]){
-			cout << x << " " << y << endl;
-			break;
-		}
-		
-	}
-}	
+    int t, n; cin >> t;
+    while(t--){
+        cin >> n;
+        int d = n%10, u = n/10;
+        cout << u+d << endl;
+    }
+    }
 
 
 int main() {
