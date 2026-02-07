@@ -8,22 +8,18 @@ typedef long long ll;
 #define vdebug(a) cout << #a << " = "; for(auto x: a) cout << x << ' '; cout << '\n';
 #define vvdebug(a) cout << #a <<" ="<<endl; for(auto &row:a){for(auto &x:row) cout<<x<<' '; cout << endl;}
 
-void solve() {
-    ll n, k; cin >> n >> k;
+bool ehprimo(int n) {
+    if (n <= 1) return false;
 
-    for (int i = 0; i <= 32; i++) {
-        ll div = 1 << i;
+    if (n == 2) return true;
 
-        ll chao = n / div;
-        ll teto = ceil(n / (div*1.0));
+    if (n % 2 == 0) return false;
 
-        if (chao == k || teto == k) {
-            cout << i << '\n';
-            return;
-        }
+    for (int i = 3; i*i <= n; i += 2) {
+        if (n % i == 0) return false;
     }
 
-    cout << -1 << '\n';
+    return true;
 }
 
 int main() {
@@ -31,9 +27,19 @@ int main() {
     cin.tie(0);
 
     int t; cin >> t;
-    
-    while(t--) {
-        solve();
+
+    while (t--) {
+        int x, k; cin >> x >> k;
+
+        if (x == 1 && k == 2) { cout << "YES\n"; continue; }
+
+        if (k > 1) {
+            cout << "NO\n";
+            continue;
+        }
+
+        if (ehprimo(x)) cout << "YES\n";
+        else cout << "NO\n";
     }
 
     return 0;

@@ -25,22 +25,56 @@ void solve() {
     int t; cin >> t;
     while(t--){
         int n, m; cin >> n >> m;
-        vector<string> vet(m);
-        for(int i=0;i<n; i++){
-            string b; cin >> b;
-            vet[i]=b;
-        }
-        for(int i=0;i<n; i++){
-            string a = vet[i];
-            for(int j=i; j<n; j++){
-                string b = vet[j];
-                int diff=0;
-                for(int k=0; k<a.size(); k++){
-                    diff+= abs((int)(a[k]-b[k]) - 'a');
-                    cout << diff << endl;
-                }
+        graph mat(n,vi(m,0));
+        graph nueva(n,vi(m,0));
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                cin >> mat[i][j];
             }
         }
+        
+        int max = 0;
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+
+                // 45°
+                nueva[i][j] += mat[i][j];
+
+                int k = i - 1, l = j + 1;
+                while(k >= 0 && l < m){
+                    nueva[i][j] += mat[k][l];
+                    k--; l++;
+                }
+
+                // 135°
+                k = i - 1; l = j - 1;
+                while(k >= 0 && l >= 0){
+                    nueva[i][j] += mat[k][l];
+                    k--; l--;
+                }
+
+                // 225°
+                k = i + 1; l = j - 1;
+                while(k < n && l >= 0){
+                    nueva[i][j] += mat[k][l];
+                    k++; l--;
+                }
+
+                // 315°
+                k = i + 1; l = j + 1;
+                while(k < n && l < m){
+                    nueva[i][j] += mat[k][l];
+                    k++; l++;
+                }
+
+                if(nueva[i][j] > max){
+                    max = nueva[i][j];
+                }
+            }
+        }   
+        cout << max << endl;     
     }
 }
 

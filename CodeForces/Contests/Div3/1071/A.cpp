@@ -8,32 +8,16 @@ typedef long long ll;
 #define vdebug(a) cout << #a << " = "; for(auto x: a) cout << x << ' '; cout << '\n';
 #define vvdebug(a) cout << #a <<" ="<<endl; for(auto &row:a){for(auto &x:row) cout<<x<<' '; cout << endl;}
 
-void solve() {
-    ll n, k; cin >> n >> k;
-
-    for (int i = 0; i <= 32; i++) {
-        ll div = 1 << i;
-
-        ll chao = n / div;
-        ll teto = ceil(n / (div*1.0));
-
-        if (chao == k || teto == k) {
-            cout << i << '\n';
-            return;
-        }
-    }
-
-    cout << -1 << '\n';
-}
-
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int t; cin >> t;
-    
+    int t;
+    cin >> t;
+
     while(t--) {
-        solve();
+        int k, x; cin >> k >> x;
+        cout << k * x + 1 << '\n';
     }
 
     return 0;

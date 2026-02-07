@@ -24,24 +24,38 @@ const ld PI = acos(-1.0L); // Valor de Pi com máxima precisão
 void solve() {
     int t; cin >> t;
     while(t--){
-        int n, q;
-        cin >> n >> q;
-        while(q--){
-            vi vet1(n,0);
-            vi vet2(n,0);
-            for(int i=0 i<n; i++){
-                cin >> vet1[i];
-            }
-            for(int i=0 i<n; i++){
-                cin >> vet2[i];
-            }
-            for(int i=vet.size()-1;i>0; i--){
-                vet1[i] = max(max(vet[i+1], vet[]))
+        int n, q; cin >> n >> q;
+        vi vet(n,0);
+        for(int i=0; i<n; i++){
+            cin >> vet[i];
+        }
+        //sort(vet.begin(), vet.end());
+
+        for (int i = 1; i < vet.size(); i++) {
+            vet[i] += vet[i - 1];
+        }
+
+        for (int i = 0; i < vet.size(); i++) {
+            cout << vet[i] << " ";
+        }
+        cout << endl;
+
+        while (q--) {
+            int val;
+            cin >> val;
+
+            auto it = lower_bound(vet.begin(), vet.end(), val);
+
+            if (it != vet.end()) {
+                int pos = it - vet.begin();
+                cout << pos << endl;   
+            } else {
+                cout << -1 << endl;
             }
         }
-        
-    }
-}
+
+            }
+        }
 
 
 int main() {
