@@ -29,17 +29,15 @@ void solve() {
         for(int i=0; i<n; i++){
             cin >> vet[i];
         }
-        //sort(vet.begin(), vet.end());
+        sort(vet.begin(), vet.end());
+        reverse(vet.begin(), vet.end());
+        if(vet.size()!=1){
 
-        for (int i = 1; i < vet.size(); i++) {
-            vet[i] += vet[i - 1];
+            for (int i = 1; i < vet.size(); i++) {
+                vet[i] += vet[i - 1];
+            }
+
         }
-
-        for (int i = 0; i < vet.size(); i++) {
-            cout << vet[i] << " ";
-        }
-        cout << endl;
-
         while (q--) {
             int val;
             cin >> val;
@@ -48,7 +46,7 @@ void solve() {
 
             if (it != vet.end()) {
                 int pos = it - vet.begin();
-                cout << pos << endl;   
+                cout << pos +1 << endl;   
             } else {
                 cout << -1 << endl;
             }
